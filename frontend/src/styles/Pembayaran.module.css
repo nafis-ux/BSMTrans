@@ -1,0 +1,250 @@
+/* src/styles/Pembayaran.module.css */
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 60px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+}
+
+.paymentCard {
+  background: linear-gradient(145deg, #131416, #1a1b1e);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 680px;
+  padding: 50px 40px;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  color: #a0a5b0;
+  font-size: 14px;
+  margin-bottom: 35px;
+}
+
+.priceSection {
+  margin-bottom: 40px;
+}
+
+.priceLabel {
+  font-size: 11px;
+  color: #a0a5b0;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.priceValue {
+  font-size: 38px;
+  font-weight: 700;
+  color: #dfb143; /* Warna emas khas BSMTrans */
+}
+
+/* --- Area Tengah (Grid QR & Upload) --- */
+.contentGrid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 30px;
+  align-items: start;
+  margin-bottom: 40px;
+}
+
+/* Sisi QR */
+.qrWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.qrBox {
+  background-color: #ffffff;
+  padding: 16px;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 180px;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+.qrText {
+  font-size: 12px;
+  color: #a0a5b0;
+  line-height: 1.5;
+}
+
+/* Sisi Upload */
+.uploadBox {
+  background-color: #0d0e10;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  padding: 24px;
+  text-align: left;
+}
+
+.uploadTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 16px;
+}
+
+.dropzone {
+  border: 1px dashed rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  padding: 30px 15px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.dropzone:hover {
+  border-color: #dfb143;
+  background-color: rgba(223, 177, 67, 0.02);
+}
+
+.uploadIcon {
+  font-size: 28px;
+  color: #dfb143;
+  margin-bottom: 10px;
+}
+
+.dropzoneText {
+  font-size: 13px;
+  color: #a0a5b0;
+}
+
+.dropzoneText span {
+  color: #dfb143;
+  font-weight: 600;
+}
+
+.fileHint {
+  font-size: 11px;
+  color: #525660;
+  margin-top: 6px;
+}
+
+.fileSelected {
+  font-size: 12px;
+  color: #2ecc71;
+  margin-top: 8px;
+  word-break: break-all;
+}
+
+.btnSubmit {
+  width: 100%;
+  background-color: #dfb143;
+  color: #000000;
+  border: none;
+  border-radius: 8px;
+  padding: 14px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: opacity 0.2s;
+}
+
+.btnSubmit:hover {
+  opacity: 0.9;
+}
+
+/* --- Status Tracker (Bawah) --- */
+.statusDivider {
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  margin-bottom: 35px;
+}
+
+.statusHeader {
+  font-size: 14px;
+  color: #a0a5b0;
+  margin-bottom: 25px;
+}
+
+.statusTrack {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.statusLine {
+  position: absolute;
+  top: 16px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: #222428;
+  z-index: 0;
+}
+
+.statusLineProgress {
+  position: absolute;
+  top: 16px;
+  left: 0;
+  height: 2px;
+  background-color: #dfb143;
+  z-index: 0;
+  transition: width 0.4s ease;
+}
+
+.step {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.circle {
+  width: 34px;
+  height: 34px;
+  background-color: #131416;
+  border: 2px solid #222428;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #a0a5b0;
+  font-size: 14px;
+  transition: all 0.3s;
+}
+
+.circleActive {
+  border-color: #dfb143;
+  background-color: #dfb143;
+  color: #000000;
+  box-shadow: 0 0 15px rgba(223, 177, 67, 0.3);
+}
+
+.stepLabel {
+  font-size: 13px;
+  color: #a0a5b0;
+}
+
+.labelActive {
+  color: #ffffff;
+  font-weight: 500;
+}

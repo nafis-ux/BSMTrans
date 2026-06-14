@@ -1,0 +1,165 @@
+/* src/styles/BookingDropOff.module.css */
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 40px;
+}
+
+.titleSection {
+  grid-column: 1 / -1;
+  margin-bottom: 20px;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  color: var(--color-text-muted);
+}
+
+/* --- Form Card Sisi Kiri --- */
+.sectionCard {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  padding: 30px;
+  margin-bottom: 24px;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.sectionIcon {
+  color: var(--color-primary);
+}
+
+.inputGroup {
+  margin-bottom: 20px;
+}
+
+.label {
+  display: block;
+  font-size: 12px;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.input, .textarea {
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 14px;
+  color: white;
+  font-size: 14px;
+}
+
+.input:focus, .textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+/* --- Sidebar Ringkasan Sisi Kanan --- */
+.summaryContainer {
+  position: sticky;
+  top: 100px;
+  height: fit-content;
+}
+
+.summaryCard {
+  background: linear-gradient(145deg, #1e1f22, #18191b);
+  border: 1px solid var(--color-border);
+  border-radius: 20px;
+  padding: 30px;
+}
+
+.dropPreview {
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+}
+
+.dropBadge {
+  background-color: rgba(223, 177, 67, 0.1);
+  color: var(--color-primary);
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-weight: 600;
+  display: inline-block;
+  margin-bottom: 12px;
+}
+
+.dropTitle {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.priceRow {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  font-size: 14px;
+  color: var(--color-text-muted);
+}
+
+.includeItem {
+  font-size: 13px;
+  color: var(--color-success);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.totalDivider {
+  height: 1px;
+  background-color: var(--color-border);
+  margin: 20px 0;
+}
+
+.totalPrice {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.totalAmount {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.btnConfirm {
+  width: 100%;
+  margin-top: 30px;
+  padding: 16px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}

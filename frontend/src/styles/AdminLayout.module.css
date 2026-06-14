@@ -1,0 +1,411 @@
+/* ============================================ */
+/* ADMIN LAYOUT — Sidebar + Top Navbar          */
+/* Dark premium theme with gold accent (var(--accent-color, #dfb143)) */
+/* ============================================ */
+
+/* ---- WRAPPER ---- */
+.adminWrapper {
+  display: flex;
+  min-height: 100vh;
+  background-color: #0a0a0c;
+}
+
+/* ============================================ */
+/* SIDEBAR                                       */
+/* ============================================ */
+.sidebar {
+  width: 240px;
+  min-height: 100vh;
+  background-color: #0e0f11;
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  transition: transform 0.3s ease;
+}
+
+/* Brand block */
+.sidebarBrand {
+  padding: 28px 24px 20px 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.brandLogo {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--accent-color, #dfb143);
+  letter-spacing: -0.5px;
+  margin: 0;
+  line-height: 1;
+}
+
+.brandSub {
+  font-size: 11px;
+  color: #5a5e69;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-top: 6px;
+  font-weight: 600;
+}
+
+/* Navigation menu */
+.sidebarNav {
+  flex: 1;
+  padding: 16px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 13px 24px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #7a7f8a;
+  cursor: pointer;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  transition: all 0.2s ease;
+  border-left: 3px solid transparent;
+  text-decoration: none;
+}
+
+.navItem:hover {
+  color: #b8bcc6;
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+.navItemActive {
+  color: var(--accent-color, #dfb143);
+  background-color: rgba(223, 177, 67, 0.06);
+  border-left-color: var(--accent-color, #dfb143);
+  font-weight: 600;
+}
+
+.navIcon {
+  font-size: 18px;
+  width: 22px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+/* Sidebar footer */
+.sidebarFooter {
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 12px 0;
+}
+
+.footerItem {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 24px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #5a5e69;
+  cursor: pointer;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  transition: all 0.2s ease;
+}
+
+.footerItem:hover {
+  color: #e74c3c;
+  background-color: rgba(231, 76, 60, 0.04);
+}
+
+/* ============================================ */
+/* MAIN CONTENT AREA                             */
+/* ============================================ */
+.mainArea {
+  flex: 1;
+  margin-left: 240px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-width: 0;
+}
+
+/* ============================================ */
+/* TOP NAVBAR                                    */
+/* ============================================ */
+.topbar {
+  height: 64px;
+  background-color: #0e0f11;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  position: sticky;
+  top: 0;
+  z-index: 90;
+}
+
+.topbarTitle {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--accent-color, #dfb143);
+  letter-spacing: 0.5px;
+}
+
+.topbarRight {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Search box */
+.searchBox {
+  display: flex;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 8px 14px;
+  gap: 8px;
+  margin-right: 12px;
+}
+
+.searchIcon {
+  font-size: 14px;
+  color: #5a5e69;
+}
+
+.searchInput {
+  background: none;
+  border: none;
+  color: #c1c5ce;
+  font-size: 13px;
+  outline: none;
+  width: 200px;
+}
+
+.searchInput::placeholder {
+  color: #4a4e58;
+}
+
+/* Icon buttons */
+.topbarIconBtn {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: #7a7f8a;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.2s ease;
+}
+
+.topbarIconBtn:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--accent-color, #dfb143);
+}
+
+/* User avatar */
+.userAvatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent-color, #dfb143), #c49b2f);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+  color: #0a0a0c;
+  cursor: pointer;
+  margin-left: 6px;
+  border: 2px solid rgba(223, 177, 67, 0.3);
+  position: relative;
+}
+
+/* ============================================ */
+/* DROPDOWNS                                     */
+/* ============================================ */
+.dropdownMenu {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  background-color: #16171a;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  min-width: 200px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  padding: 8px 0;
+  z-index: 100;
+  animation: slideDown 0.2s ease;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.dropdownItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 20px;
+  color: #c1c5ce;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+}
+
+.dropdownItem:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #fff;
+}
+
+.dropdownHeader {
+  padding: 8px 20px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  margin-bottom: 8px;
+}
+
+.dropdownTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  margin: 0 0 4px 0;
+}
+
+.dropdownSubtitle {
+  font-size: 11px;
+  color: #8a8f98;
+  margin: 0;
+}
+
+/* ============================================ */
+/* PAGE CONTENT CONTAINER                        */
+/* ============================================ */
+.pageContent {
+  flex: 1;
+  padding: 32px;
+  min-width: 0;
+  width: 100%;
+}
+
+/* ============================================ */
+/* LOADING STATE                                 */
+/* ============================================ */
+.loadingScreen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #0a0a0c;
+  color: #5a5e69;
+  font-size: 15px;
+  gap: 12px;
+}
+
+.loadingSpinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(223, 177, 67, 0.2);
+  border-top-color: var(--accent-color, #dfb143);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ============================================ */
+/* RESPONSIVE                                    */
+/* ============================================ */
+.hamburgerBtn {
+  display: none;
+  background: none;
+  border: none;
+  color: #c1c5ce;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0;
+  margin-right: 16px;
+}
+
+.mobileOverlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 95;
+  backdrop-filter: blur(2px);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.mobileOverlay.show {
+  opacity: 1;
+}
+
+@media (max-width: 1024px) {
+  .hamburgerBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .mobileOverlay {
+    display: block;
+  }
+  
+  .sidebar {
+    transform: translateX(-100%);
+  }
+  
+  .sidebarOpen {
+    transform: translateX(0);
+  }
+  
+  .mainArea {
+    margin-left: 0;
+  }
+  
+  .searchBox {
+    display: none;
+  }
+  
+  .topbar {
+    padding: 0 20px;
+  }
+  
+  .pageContent {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .topbarTitle {
+    font-size: 14px;
+    max-width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

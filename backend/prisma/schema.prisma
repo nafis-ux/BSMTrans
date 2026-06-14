@@ -1,0 +1,119 @@
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        String    @id @default(uuid()) // Otomatis generate UUID
+  nama      String
+  email     String    @unique
+  password  String    // ← WAJIB TAMBAHKAN BARIS INI
+  whatsapp  String
+  fotoKTP   String?
+  fotoSIM   String?
+  role          Role        @default(CUSTOMER)
+  uiPreferences Json?       // ← Menyimpan preferensi tema admin
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  transaksi     Transaksi[]
+}
+
+enum Role {
+  CUSTOMER
+  ADMIN
+}
+
+model Mobil {
+  id             String      @id
+  namaMobil      String
+  tipe           String
+  hargaPerHari   Int
+  biayaDriver    Int         @default(0)
+  statusTersedia Boolean     @default(true)
+  // Tambahkan kolom di bawah agar sinkron dengan database
+  kursi          Int
+  bagasi         Int
+  transmisi      String
+  fiturLain      String?
+  image          String?
+  transaksiSewa  Transaksi[]
+}
+
+model RuteTravel {
+  id              String      @id
+  asal            String
+  tujuan          String
+  hargaTiket      Int
+  jadwal          String
+  armada          String
+  totalKursi      Int         @default(14)
+  sisaKursi       Int         @default(14)
+  fasilitas       String?     @default("AC, Reclining Seat")
+  estimasiWaktu   String?     @default("8 Jam")
+  titikKumpul     String?     @default("Pool BSM")
+  titikTurun      String?     @default("Terminal Tujuan")
+  image           String?
+  transaksiTravel Transaksi[]
+}
+
+model LayananDropOff {
+  id             String      @id
+  destinasi      String
+  tag            String      @default("FLEKSIBEL")
+  deskripsi      String?     @db.Text
+  harga          Int
+  estimasiWaktu  String?
+  image          String?
+  transaksiDrop  Transaksi[]
+}
+
+model Transaksi {
+  id              String          @id
+  userId          String
+  user            User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  jenisLayanan    JenisLayanan
+  mobilId         String?
+  mobil           Mobil?          @relation(fields: [mobilId], references: [id], onDelete: SetNull)
+  ruteTravelId    String?
+  ruteTravel      RuteTravel?     @relation(fields: [ruteTravelId], references: [id], onDelete: SetNull)
+  layananDropOffId String?
+  layananDropOff  LayananDropOff? @relation(fields: [layananDropOffId], references: [id], onDelete: SetNull)
+  tanggalLayanan  DateTime        @db.Date
+  durasi          Int             @default(1)
+  alamatJemput    String?         @db.Text
+  detailManifest  Json
+  totalHarga      Int
+  sisaTagihan     Int
+  status          StatusTransaksi @default(PENDING)
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  dokumenValidasi DokumenValidasi?
+}
+
+enum JenisLayanan {
+  SEWA_MOBIL
+  TRAVEL
+  DROP_OFF
+}
+
+enum StatusTransaksi {
+  PENDING
+  VERIFIKASI_DP
+  DP_DIBAYAR
+  VERIFIKASI_SISA
+  LUNAS
+  BATAL
+}
+
+model DokumenValidasi {
+  id            String    @id @default(uuid())
+  transaksiId   String    @unique
+  transaksi     Transaksi @relation(fields: [transaksiId], references: [id], onDelete: Cascade)
+  buktiResiDP   String?
+  buktiResiSisa String?
+  updatedAt     DateTime  @updatedAt
+}

@@ -1,0 +1,297 @@
+/* src/styles/Mobil.module.css */
+
+.main {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #050505;
+  color: #ffffff;
+  overflow-x: hidden;
+}
+
+/* ============================================ */
+/* HERO SECTION                                  */
+/* ============================================ */
+.heroSection {
+  position: relative;
+  width: 100%;
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 50%, rgba(0, 0, 0, 0.8) 100%),
+              url('/images/hero-rental.png') center/cover no-repeat;
+  background-attachment: fixed;
+}
+
+.heroSection::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 150px;
+  background: linear-gradient(to top, #050505 0%, transparent 100%);
+  pointer-events: none;
+}
+
+.heroContent {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.badge {
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: rgba(223, 177, 67, 0.15);
+  border: 1px solid rgba(223, 177, 67, 0.3);
+  border-radius: 30px;
+  color: var(--accent-color, #dfb143);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+  backdrop-filter: blur(4px);
+  animation: fadeInDown 1s ease;
+}
+
+.title {
+  font-size: 56px;
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 24px;
+  letter-spacing: -1px;
+  animation: fadeInUp 1s ease 0.2s both;
+}
+
+.titleHighlight {
+  color: var(--accent-color, #dfb143);
+  display: block;
+}
+
+.subtitle {
+  font-size: 18px;
+  color: #a0a5b1;
+  max-width: 700px;
+  line-height: 1.6;
+  margin-bottom: 0;
+  font-weight: 400;
+  animation: fadeInUp 1s ease 0.4s both;
+}
+
+/* ============================================ */
+/* CAR CATALOG SECTION                          */
+/* ============================================ */
+.catalogSection {
+  padding: 40px 20px 80px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 10;
+}
+
+.carGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 30px;
+}
+
+.carCard {
+  background: rgba(20, 21, 24, 0.6);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  animation: fadeInUp 1s ease 0.6s both;
+  display: flex;
+  flex-direction: column;
+}
+
+.carCard:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  border-color: rgba(223, 177, 67, 0.2);
+}
+
+.imageWrapper {
+  position: relative;
+  height: 240px;
+  overflow: hidden;
+}
+
+.carImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.carCard:hover .carImage {
+  transform: scale(1.05);
+}
+
+.imagePlaceholder {
+  width: 100%;
+  height: 100%;
+  background: #111;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #444;
+}
+
+.statusBadge {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  backdrop-filter: blur(8px);
+}
+
+.statusTersedia {
+  background: rgba(46, 204, 113, 0.2);
+  color: #2ecc71;
+  border: 1px solid rgba(46, 204, 113, 0.4);
+}
+
+.statusDisewa {
+  background: rgba(231, 76, 60, 0.2);
+  color: #e74c3c;
+  border: 1px solid rgba(231, 76, 60, 0.4);
+}
+
+.priceTag {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background: var(--accent-color, #dfb143);
+  color: #000;
+  padding: 10px 16px;
+  border-top-right-radius: 16px;
+  font-weight: 700;
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.priceAmount {
+  font-size: 18px;
+}
+
+.priceUnit {
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.carContent {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.carName {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0 0 4px 0;
+}
+
+.carType {
+  color: #a0a5b1;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 20px;
+}
+
+.specsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 24px;
+  padding: 16px 0;
+  border-top: 1px dashed rgba(255, 255, 255, 0.1);
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+}
+
+.specItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #a0a5b1;
+  font-size: 13px;
+}
+
+.specIcon {
+  color: var(--accent-color, #dfb143);
+  font-size: 16px;
+}
+
+.cardFooter {
+  margin-top: auto;
+}
+
+.btnPesan {
+  width: 100%;
+  display: block;
+  background: var(--accent-color, #dfb143);
+  color: #000;
+  text-align: center;
+  padding: 14px;
+  border-radius: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.btnPesan:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(223, 177, 67, 0.3);
+}
+
+.btnDisabled {
+  width: 100%;
+  display: block;
+  background: rgba(255, 255, 255, 0.05);
+  color: #555;
+  text-align: center;
+  padding: 14px;
+  border-radius: 12px;
+  font-weight: 700;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  cursor: not-allowed;
+  font-size: 15px;
+}
+
+/* ============================================ */
+/* ANIMATIONS & RESPONSIVE                        */
+/* ============================================ */
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+  .title { font-size: 42px; }
+}

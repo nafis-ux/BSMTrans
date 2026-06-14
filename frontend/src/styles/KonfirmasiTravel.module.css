@@ -1,0 +1,162 @@
+/* src/styles/KonfirmasiTravel.module.css */
+
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 80px 20px;
+}
+
+.headerText {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.successIcon {
+  font-size: 40px;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 8px 0;
+}
+
+.subtitle {
+  font-size: 15px;
+  color: #a0a5b1;
+  margin: 0;
+}
+
+/* --- KARTU TIKET ELEGAN --- */
+.ticketCard {
+  background: rgba(20, 21, 24, 0.8);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  padding: 32px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  position: relative;
+}
+
+.routeHeader {
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+  padding-bottom: 24px;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.badge {
+  background-color: var(--accent-color, #dfb143);
+  color: #000;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  display: inline-block;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+}
+
+.routeTitle {
+  font-size: 26px;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 6px 0;
+}
+
+.armadaName {
+  font-size: 14px;
+  color: #a0a5b1;
+  margin: 0;
+}
+
+/* --- BLOK MANIFEST DATA --- */
+.manifestBlock {
+  margin-bottom: 24px;
+}
+
+.blockTitle {
+  font-size: 13px;
+  color: #8a8f98;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+}
+
+.infoRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  font-size: 15px;
+  margin-bottom: 16px;
+  gap: 20px;
+}
+
+.infoLabel {
+  color: #a0a5b1;
+  flex-shrink: 0;
+}
+
+.infoValue {
+  color: #ffffff;
+  font-weight: 600;
+  text-align: right;
+}
+
+.seatHighlight {
+  color: var(--accent-color, #dfb143);
+  font-weight: 800;
+}
+
+.divider {
+  border: 0;
+  border-top: 1px dashed rgba(255, 255, 255, 0.1);
+  margin: 24px 0;
+}
+
+/* --- TOTAL HARGA --- */
+.totalBlock {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.totalLabel {
+  font-size: 16px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.totalAmount {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--accent-color, #dfb143);
+}
+
+/* --- ACTION BUTTON --- */
+.btnAction {
+  width: 100%;
+  background: var(--accent-color, #dfb143);
+  color: #000000;
+  border: none;
+  border-radius: 12px;
+  padding: 18px;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  display: block;
+  text-decoration: none;
+}
+
+.btnAction:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(223, 177, 67, 0.3);
+}

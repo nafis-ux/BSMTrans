@@ -1,0 +1,130 @@
+/* src/styles/Login.module.css */
+
+.container {
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.loginCard {
+  background: linear-gradient(145deg, #131416, #1a1b1e);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 420px;
+  padding: 40px 30px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: 700;
+  color: #dfb143; /* Emas BSMTrans */
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  color: #a0a5b0;
+  font-size: 14px;
+}
+
+/* --- Kotak Notifikasi Error (Otentikasi Gagal) --- */
+.errorAlert {
+  background-color: rgba(231, 76, 60, 0.1);
+  border: 1px solid #e74c3c;
+  color: #e74c3c;
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 13px;
+  text-align: left;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  animation: shake 0.2s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+/* --- Form Inputs --- */
+.formGroup {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.label {
+  display: block;
+  font-size: 12px;
+  color: #a0a5b0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.inputWrapper {
+  position: relative;
+}
+
+.input {
+  width: 100%;
+  background-color: #0d0e10;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 14px 16px;
+  color: white;
+  font-size: 14px;
+  transition: border-color 0.2s;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #dfb143;
+}
+
+.btnSubmit {
+  width: 100%;
+  background-color: #dfb143;
+  color: black;
+  border: none;
+  border-radius: 8px;
+  padding: 14px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: opacity 0.2s;
+}
+
+.btnSubmit:hover {
+  opacity: 0.9;
+}
+
+.footerText {
+  text-align: center;
+  margin-top: 25px;
+  font-size: 13px;
+  color: #626670;
+}
+
+.registerLink {
+  color: #dfb143;
+  text-decoration: none;
+  font-weight: 600;
+  margin-left: 5px;
+}
+
+.registerLink:hover {
+  text-decoration: underline;
+}

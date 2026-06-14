@@ -1,0 +1,151 @@
+/* src/styles/Konfirmasi.module.css */
+
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.successHeader {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.successIcon {
+  font-size: 48px;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 6px 0;
+}
+
+.subtitle {
+  font-size: 13px;
+  color: #8a8f98;
+  margin: 0;
+}
+
+/* --- KARTU RINCIAN PEMESANAN --- */
+.receiptCard {
+  background-color: #111214;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.carPreview {
+  text-align: center;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+  padding-bottom: 20px;
+  margin-bottom: 24px;
+}
+
+.carBadge {
+  background-color: rgba(223, 177, 67, 0.08);
+  border: 1px solid rgba(223, 177, 67, 0.2);
+  color: #dfb143;
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  display: inline-block;
+  margin-bottom: 12px;
+}
+
+.carName {
+  font-size: 22px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 4px 0;
+}
+
+.carType {
+  font-size: 13px;
+  color: #626670;
+  margin: 0;
+}
+
+/* --- DETAIL DATA GRIDS --- */
+.detailsBlock {
+  margin-bottom: 24px;
+}
+
+.blockTitle {
+  font-size: 12px;
+  color: #626670;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+}
+
+.infoRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.infoLabel {
+  color: #8a8f98;
+}
+
+.infoValue {
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.divider {
+  border: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  margin: 20px 0;
+}
+
+/* --- TOTAL HARGA --- */
+.totalBlock {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 30px;
+}
+
+.totalLabel {
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.totalAmount {
+  font-size: 24px;
+  font-weight: 700;
+  color: #dfb143;
+}
+
+/* --- ACTIONS BUTTONS --- */
+.btnAction {
+  width: 100%;
+  background-color: #dfb143;
+  color: #000000;
+  border: none;
+  border-radius: 8px;
+  padding: 14px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  text-align: center;
+  display: block;
+  text-decoration: none;
+}
+
+.btnAction:hover {
+  opacity: 0.9;
+}

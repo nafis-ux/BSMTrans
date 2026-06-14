@@ -1,0 +1,405 @@
+/* src/styles/Home.module.css */
+
+.main {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #050505;
+  color: #ffffff;
+  overflow-x: hidden;
+}
+
+/* ============================================ */
+/* HERO SECTION                                  */
+/* ============================================ */
+.heroSection {
+  position: relative;
+  width: 100%;
+  min-height: 90vh; /* Hampir full screen */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.4) 50%, rgba(0, 0, 0, 0.8) 100%),
+              url('/images/hero-bg.png') center/cover no-repeat;
+  background-attachment: fixed; /* Parallax effect */
+}
+
+/* Overlay gradient for bottom fade out */
+.heroSection::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 150px;
+  background: linear-gradient(to top, #050505 0%, transparent 100%);
+  pointer-events: none;
+}
+
+.heroContent {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.badge {
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: rgba(223, 177, 67, 0.15);
+  border: 1px solid rgba(223, 177, 67, 0.3);
+  border-radius: 30px;
+  color: var(--accent-color, #dfb143);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+  backdrop-filter: blur(4px);
+  animation: fadeInDown 1s ease;
+}
+
+.title {
+  font-size: 64px;
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 24px;
+  letter-spacing: -1px;
+  animation: fadeInUp 1s ease 0.2s both;
+}
+
+.titleHighlight {
+  color: var(--accent-color, #dfb143);
+  display: block;
+}
+
+.subtitle {
+  font-size: 18px;
+  color: #a0a5b1;
+  max-width: 600px;
+  line-height: 1.6;
+  margin-bottom: 50px;
+  font-weight: 400;
+  animation: fadeInUp 1s ease 0.4s both;
+}
+
+/* ============================================ */
+/* QUICK SEARCH WIDGET (GLASSMORPHISM)           */
+/* ============================================ */
+.searchWidget {
+  background: rgba(20, 21, 24, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 24px;
+  width: 100%;
+  max-width: 1000px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  animation: fadeInUp 1s ease 0.6s both;
+}
+
+.searchTabs {
+  display: flex;
+  gap: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 16px;
+}
+
+.tabBtn {
+  background: none;
+  border: none;
+  color: #8a8f98;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 30px;
+  transition: all 0.3s ease;
+}
+
+.tabBtn:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.tabBtnActive {
+  background: var(--accent-color, #dfb143);
+  color: #000;
+  box-shadow: 0 4px 15px rgba(223, 177, 67, 0.3);
+}
+
+.searchForm {
+  display: flex;
+  gap: 16px;
+  align-items: flex-end;
+}
+
+.inputGroup {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: left;
+}
+
+.inputLabel {
+  font-size: 12px;
+  font-weight: 600;
+  color: #a0a5b1;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.inputField {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fff;
+  padding: 14px 16px;
+  border-radius: 8px;
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.inputField:focus {
+  border-color: var(--accent-color, #dfb143);
+}
+
+.searchBtn {
+  background: var(--accent-color, #dfb143);
+  color: #0a0a0c;
+  border: none;
+  padding: 14px 32px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  height: 50px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  white-space: nowrap;
+}
+
+.searchBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(223, 177, 67, 0.4);
+}
+
+/* ============================================ */
+/* ANIMATIONS                                    */
+/* ============================================ */
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================ */
+/* RESPONSIVE                                    */
+/* ============================================ */
+@media (max-width: 768px) {
+  .title {
+    font-size: 42px;
+  }
+  
+  .subtitle {
+    font-size: 16px;
+  }
+  
+  .searchForm {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .searchBtn {
+    margin-top: 10px;
+  }
+  
+  .searchTabs {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+/* ============================================ */
+/* FLEET SECTION                                */
+/* ============================================ */
+.fleetSection {
+  padding: 80px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.sectionHeader {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.sectionTitle {
+  font-size: 40px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.sectionSubtitle {
+  color: #a0a5b1;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.fleetGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 30px;
+}
+
+.fleetCard {
+  background: rgba(20, 21, 24, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.fleetCard:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+  border-color: rgba(223, 177, 67, 0.2);
+}
+
+.fleetImageWrapper {
+  position: relative;
+  height: 220px;
+  overflow: hidden;
+}
+
+.fleetImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.fleetCard:hover .fleetImage {
+  transform: scale(1.05);
+}
+
+.fleetImagePlaceholder {
+  width: 100%;
+  height: 100%;
+  background: #111;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #444;
+}
+
+.fleetPriceTag {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: var(--accent-color, #dfb143);
+  color: #000;
+  padding: 10px 16px;
+  border-top-left-radius: 16px;
+  font-weight: 700;
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.priceAmount {
+  font-size: 18px;
+}
+
+.priceUnit {
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.fleetInfo {
+  padding: 24px;
+}
+
+.fleetHeader {
+  margin-bottom: 20px;
+}
+
+.fleetName {
+  font-size: 22px;
+  font-weight: 600;
+  margin: 0 0 6px 0;
+}
+
+.fleetType {
+  font-size: 13px;
+  color: #a0a5b1;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.fleetSpecs {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 16px 0;
+}
+
+.specItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #a0a5b1;
+}
+
+.specIcon {
+  font-size: 16px;
+}
+
+.fleetBtn {
+  width: 100%;
+  background: transparent;
+  border: 1px solid var(--accent-color, #dfb143);
+  color: var(--accent-color, #dfb143);
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.fleetBtn:hover {
+  background: var(--accent-color, #dfb143);
+  color: #000;
+}
+
+.btnOutline {
+  display: inline-block;
+  padding: 14px 32px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 30px;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btnOutline:hover {
+  border-color: var(--accent-color, #dfb143);
+  color: var(--accent-color, #dfb143);
+}
