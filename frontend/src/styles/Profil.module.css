@@ -144,6 +144,12 @@
   min-height: 480px;
 }
 
+@media (max-width: 480px) {
+  .cardForm {
+    padding: 20px;
+  }
+}
+
 .sectionTitle {
   font-size: 22px;
   font-weight: 700;

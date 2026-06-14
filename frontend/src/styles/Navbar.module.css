@@ -28,6 +28,24 @@
   gap: 30px;
 }
 
+.menuWrapper {
+  display: flex;
+  flex: 1;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 40px;
+}
+
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--color-primary);
+  font-size: 24px;
+  cursor: pointer;
+  padding: 5px;
+}
+
 .navLink {
   color: var(--color-text-muted);
   font-size: 14px;
@@ -120,4 +138,60 @@
 
 .activeAuthSolid {
   box-shadow: 0 0 10px rgba(223, 177, 67, 0.25);
+}
+
+/* --- RESPONSIVE MOBILE --- */
+@media (max-width: 768px) {
+  .hamburger {
+    display: block;
+  }
+
+  .menuWrapper {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    flex-direction: column;
+    background-color: rgba(13, 14, 16, 0.98);
+    padding: 24px 20px;
+    border-bottom: 1px solid var(--color-border);
+    gap: 24px;
+    align-items: flex-start;
+  }
+
+  .menuOpen {
+    display: flex;
+  }
+
+  .nav {
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+  }
+
+  .navLink {
+    font-size: 16px;
+    width: 100%;
+    display: block;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .activeLink::after {
+    bottom: -1px;
+  }
+
+  .actions {
+    flex-direction: column;
+    width: 100%;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .authGroup {
+    width: 100%;
+    justify-content: center;
+    margin-right: 0;
+  }
 }

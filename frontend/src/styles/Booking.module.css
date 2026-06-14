@@ -252,3 +252,19 @@
     position: static;
   }
 }
+
+@media (max-width: 480px) {
+  .row {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .optionGrid {
+    grid-template-columns: 1fr;
+  }
+  .title {
+    font-size: 32px;
+  }
+  .sectionCard {
+    padding: 20px;
+  }
+}

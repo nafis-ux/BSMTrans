@@ -236,3 +236,15 @@
     position: static;
   }
 }
+
+@media (max-width: 480px) {
+  .seatGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .title {
+    font-size: 32px;
+  }
+  .sectionCard {
+    padding: 20px;
+  }
+}

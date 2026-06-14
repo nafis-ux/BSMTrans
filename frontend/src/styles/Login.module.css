@@ -128,3 +128,9 @@
 .registerLink:hover {
   text-decoration: underline;
 }
+
+@media (max-width: 480px) {
+  .loginCard {
+    padding: 30px 20px;
+  }
+}

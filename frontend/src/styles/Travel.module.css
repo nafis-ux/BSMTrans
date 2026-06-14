@@ -99,7 +99,7 @@
 
 .travelGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 30px;
 }
 
@@ -271,4 +271,33 @@
   .title { font-size: 42px; }
   .routeName { font-size: 20px; }
   .priceValue { font-size: 24px; }
+  .heroSection {
+    padding: 100px 15px 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .title { font-size: 32px; }
+  .subtitle { font-size: 16px; }
+  .travelGrid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .routesSection {
+    padding: 20px 15px 60px;
+  }
+  .routeHeader {
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .details {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .fleetBlock {
+    align-items: flex-start;
+    text-align: left;
+  }
 }

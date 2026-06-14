@@ -149,3 +149,18 @@
 .btnAction:hover {
   opacity: 0.9;
 }
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 20px;
+  }
+  .carName {
+    font-size: 18px;
+  }
+  .totalAmount {
+    font-size: 20px;
+  }
+  .receiptCard {
+    padding: 20px;
+  }
+}

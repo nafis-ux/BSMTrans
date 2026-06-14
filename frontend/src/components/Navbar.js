@@ -1,11 +1,13 @@
 "use client";
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
+import { useState } from 'react';
 import styles from '../styles/Navbar.module.css';
 
 export default function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const menuItems = [
     { name: 'Home', path: '/' },
@@ -19,6 +21,7 @@ export default function Navbar() {
   const protectedPaths = ['/mobil', '/travel', '/dropoff', '/transaksi', '/profil'];
 
   const handleNavClick = (e, path) => {
+    setIsMenuOpen(false); // Close menu on click
     // Cek apakah path ini butuh login
     const needsAuth = protectedPaths.some(p => path.startsWith(p));
     if (needsAuth) {
@@ -41,53 +44,60 @@ export default function Navbar() {
       <div className={styles.container}>
         <div className={styles.logo}>BSMTrans</div>
 
-        <nav className={styles.nav}>
-          {menuItems.map((item) => {
-            const isActive = pathname === item.path;
-            return (
-              <Link 
-                key={item.path} 
-                href={item.path} 
-                onClick={(e) => handleNavClick(e, item.path)}
-                className={`${styles.navLink} ${isActive ? styles.activeLink : ''}`}
-              >
-                {item.name}
-              </Link>
-            );
-          })}
-        </nav>
+        {/* Hamburger Menu Icon */}
+        <button className={styles.hamburger} onClick={() => setIsMenuOpen(!isMenuOpen)}>
+          {isMenuOpen ? '✖' : '☰'}
+        </button>
 
-        <div className={styles.actions}>
-          
-          {/* GRUP UTENTIKASI ESTETIK (Sekarang di paling kiri sebelum Notifikasi) */}
-          <div className={styles.authGroup}>
+        <div className={`${styles.menuWrapper} ${isMenuOpen ? styles.menuOpen : ''}`}>
+          <nav className={styles.nav}>
+            {menuItems.map((item) => {
+              const isActive = pathname === item.path;
+              return (
+                <Link 
+                  key={item.path} 
+                  href={item.path} 
+                  onClick={(e) => handleNavClick(e, item.path)}
+                  className={`${styles.navLink} ${isActive ? styles.activeLink : ''}`}
+                >
+                  {item.name}
+                </Link>
+              );
+            })}
+          </nav>
+
+          <div className={styles.actions}>
+            {/* GRUP UTENTIKASI ESTETIK */}
+            <div className={styles.authGroup}>
+              <Link 
+                href="/login" 
+                onClick={() => setIsMenuOpen(false)}
+                className={`${styles.btnLoginOutline} ${pathname === '/login' ? styles.activeAuth : ''}`}
+              >
+                Login
+              </Link>
+              <Link 
+                href="/register" 
+                onClick={() => setIsMenuOpen(false)}
+                className={`${styles.btnRegisterSolid} ${pathname === '/register' ? styles.activeAuthSolid : ''}`}
+              >
+                Register
+              </Link>
+            </div>
+            
+            {/* Ikon Notifikasi */}
+            <button className={styles.iconBtn}>🔔</button>
+
+            {/* Ikon Profil */}
             <Link 
-              href="/login" 
-              className={`${styles.btnLoginOutline} ${pathname === '/login' ? styles.activeAuth : ''}`}
+              href="/profil" 
+              onClick={(e) => handleNavClick(e, '/profil')}
+              className={`${styles.iconBtn} ${pathname === '/profil' ? styles.activeProfile : ''}`}
+              title="Profil Saya"
             >
-              Login
-            </Link>
-            <Link 
-              href="/register" 
-              className={`${styles.btnRegisterSolid} ${pathname === '/register' ? styles.activeAuthSolid : ''}`}
-            >
-              Register
+              👤
             </Link>
           </div>
-          
-          {/* Ikon Notifikasi */}
-          <button className={styles.iconBtn}>🔔</button>
-
-          {/* Ikon Profil */}
-          <Link 
-            href="/profil" 
-            onClick={(e) => handleNavClick(e, '/profil')}
-            className={`${styles.iconBtn} ${pathname === '/profil' ? styles.activeProfile : ''}`}
-            title="Profil Saya"
-          >
-            👤
-          </Link>
-          
         </div>
       </div>
     </header>

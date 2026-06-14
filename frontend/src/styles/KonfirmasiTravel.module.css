@@ -157,6 +157,25 @@
 }
 
 .btnAction:hover {
+  opacity: 0.9;
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 20px;
+  }
+  .routeName {
+    font-size: 18px;
+  }
+  .totalAmount {
+    font-size: 20px;
+  }
+  .receiptCard {
+    padding: 20px;
+  }
+}
+
+.btnAction:hover {
   transform: translateY(-2px);
   box-shadow: 0 10px 20px rgba(223, 177, 67, 0.3);
 }
