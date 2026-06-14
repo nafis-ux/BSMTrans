@@ -41,7 +41,7 @@ export default function AdminLayout({ children }) {
       setIsAuthorized(true);
 
       // Ambil profil dari server (untuk mendapatkan uiPreferences terupdate)
-      fetch('http://localhost:5000/api/admin/profile', {
+      fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/admin/profile`, {
         headers: { 'Authorization': `Bearer ${token}` }
       })
       .then(res => res.json())

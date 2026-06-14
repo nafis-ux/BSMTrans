@@ -30,7 +30,7 @@ export default function BookingDropOffPage({ params }) {
       return;
     }
 
-    fetch('http://localhost:5000/api/user/profile', {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/user/profile`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -49,7 +49,7 @@ export default function BookingDropOffPage({ params }) {
     if (!id) return;
     const fetchService = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/dropoff/${id}`);
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/dropoff/${id}`);
         if (res.ok) {
           const data = await res.json();
           setService(data);
@@ -89,7 +89,7 @@ export default function BookingDropOffPage({ params }) {
 
     try {
       setIsSubmitting(true);
-      const response = await fetch('http://localhost:5000/api/transaksi', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/transaksi`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

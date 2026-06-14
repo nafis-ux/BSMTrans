@@ -32,19 +32,19 @@ export default function BookingTravelPage() {
     const fetchBookingData = async () => {
       try {
         // 1. Ambil detail rute travel
-        const routeResponse = await fetch(`http://localhost:5000/api/travel/${travelId}`);
+        const routeResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/travel/${travelId}`);
         const routeData = await routeResponse.json();
         setRouteDetail(routeData);
 
         // 2. Ambil daftar kursi yang sudah ter-booking dari database (kolom detailManifest)
-        const seatsResponse = await fetch(`http://localhost:5000/api/travel/${travelId}/occupied-seats`);
+        const seatsResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/travel/${travelId}/occupied-seats`);
         const seatsData = await seatsResponse.json();
         setOccupiedSeats(seatsData.occupiedSeats || []);
 
         // 3. FITUR OTOMATIS: Ambil Nama Lengkap dari Profil User yang sedang Login
         const token = localStorage.getItem('token');
         if (token) {
-          const profileResponse = await fetch('http://localhost:5000/api/user/profile', {
+          const profileResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/user/profile`, {
             headers: {
               'Authorization': `Bearer ${token}`
             }
@@ -210,7 +210,7 @@ export default function BookingTravelPage() {
             <span className={styles.routeBadge}>EXECUTIVE LINE</span>
             {routeDetail.image ? (
                <div style={{ width: '100%', height: '160px', borderRadius: '12px', overflow: 'hidden', marginBottom: '20px' }}>
-                 <img src={`http://localhost:5000/uploads/${routeDetail.image}`} alt={routeDetail.armada} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                 <img src={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/uploads/${routeDetail.image}`} alt={routeDetail.armada} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                </div>
             ) : null}
             <h2 className={styles.routeTitle}>{routeDetail.asal} → {routeDetail.tujuan}</h2>

@@ -26,7 +26,7 @@ export default function KonfirmasiTiketTravelPage() {
 
     const fetchDetailRoute = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/api/travel/${travelId}`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/travel/${travelId}`);
         if (!response.ok) throw new Error("Gagal mengambil data rute");
         
         const data = await response.json();
@@ -63,7 +63,7 @@ export default function KonfirmasiTiketTravelPage() {
       setIsSubmitting(true);
 
       // Kirim data manifest ke tabel transaksi di database backend
-      const response = await fetch('http://localhost:5000/api/transaksi', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/transaksi`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -114,7 +114,7 @@ export default function KonfirmasiTiketTravelPage() {
           <span className={styles.badge}>EXECUTIVE LINE</span>
           {routeDetail?.image ? (
             <div style={{ width: '100%', height: '160px', borderRadius: '12px', overflow: 'hidden', marginBottom: '20px' }}>
-              <img src={`http://localhost:5000/uploads/${routeDetail.image}`} alt={routeDetail.armada} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              <img src={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/uploads/${routeDetail.image}`} alt={routeDetail.armada} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
             </div>
           ) : null}
           <h2 className={styles.routeTitle}>{routeDetail?.asal} → {routeDetail?.tujuan}</h2>

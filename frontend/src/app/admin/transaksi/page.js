@@ -11,7 +11,7 @@ export default function AdminTransaksiPage() {
     const token = localStorage.getItem('token');
     const headers = { 'Authorization': `Bearer ${token}` };
 
-    fetch('http://localhost:5000/api/admin/transaksi', { headers })
+    fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/admin/transaksi`, { headers })
       .then(res => res.json())
       .then(data => { if (Array.isArray(data)) setTransaksiList(data); })
       .catch(err => console.error(err))
@@ -23,7 +23,7 @@ export default function AdminTransaksiPage() {
 
     const token = localStorage.getItem('token');
     try {
-      const res = await fetch(`http://localhost:5000/api/admin/transaksi/${trxId}/status`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/admin/transaksi/${trxId}/status`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify({ status: newStatus })

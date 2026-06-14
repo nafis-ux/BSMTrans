@@ -20,7 +20,7 @@ export default function AdminLayananDropOffPage() {
 
   const fetchServices = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/dropoff');
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/dropoff`);
       const data = await res.json();
       if (Array.isArray(data)) {
         setDropOffServices(data);
@@ -67,8 +67,8 @@ export default function AdminLayananDropOffPage() {
 
     try {
       const url = isEditMode 
-        ? `http://localhost:5000/api/dropoff/${formData.id}`
-        : 'http://localhost:5000/api/dropoff';
+        ? `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/dropoff/${formData.id}`
+        : `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/dropoff`;
         
       const method = isEditMode ? 'PUT' : 'POST';
 
@@ -96,7 +96,7 @@ export default function AdminLayananDropOffPage() {
     if (!confirm(`Hapus layanan Drop Off dengan ID ${id}?`)) return;
     const token = localStorage.getItem('token');
     try {
-      const res = await fetch(`http://localhost:5000/api/dropoff/${id}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/dropoff/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });

@@ -13,7 +13,7 @@ export default function TravelPage() {
   useEffect(() => {
     const fetchRoutes = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/travel');
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/travel`);
         const data = await response.json();
         setRoutes(Array.isArray(data) ? data : []);
       } catch (error) {
@@ -64,7 +64,7 @@ export default function TravelPage() {
                   
                   {route.image ? (
                     <div style={{ width: '100%', height: '180px', borderRadius: '12px', overflow: 'hidden', marginBottom: '20px' }}>
-                      <img src={`http://localhost:5000/uploads/${route.image}`} alt={route.armada} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                      <img src={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/uploads/${route.image}`} alt={route.armada} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                     </div>
                   ) : null}
                   

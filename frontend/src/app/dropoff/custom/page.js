@@ -29,7 +29,7 @@ export default function CustomDropOffPage() {
       return;
     }
 
-    fetch('http://localhost:5000/api/user/profile', {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/user/profile`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -47,7 +47,7 @@ export default function CustomDropOffPage() {
   useEffect(() => {
     const fetchService = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/dropoff/custom-drop`);
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/dropoff/custom-drop`);
         if (res.ok) {
           const data = await res.json();
           setService(data);
@@ -87,7 +87,7 @@ export default function CustomDropOffPage() {
 
     try {
       setIsSubmitting(true);
-      const response = await fetch('http://localhost:5000/api/transaksi', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/transaksi`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

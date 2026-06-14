@@ -32,7 +32,7 @@ export default function BookingForm() {
     }
 
     if (carId) {
-      fetch(`http://localhost:5000/api/mobil/${carId}`)
+      fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/mobil/${carId}`)
         .then((res) => {
           if (!res.ok) throw new Error(`Gagal memuat data mobil: ${res.status}`);
           return res.json();
@@ -42,7 +42,7 @@ export default function BookingForm() {
     }
 
     // Fetch profil user untuk cek nama, WA, dan status fotoKTP (TIDAK DIUBAH)
-    fetch('http://localhost:5000/api/user/profile', {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/user/profile`, {
       method: 'GET',
       headers: { 'Authorization': `Bearer ${token}` }
     })
@@ -223,7 +223,7 @@ export default function BookingForm() {
           <div className={styles.carPreview}>
             <span className={styles.carBadge}>PREMIUM CLASS</span>
             {carData.image ? (
-              <img src={`http://localhost:5000/uploads/${carData.image}`} alt={carData.namaMobil} className={styles.carImage} />
+              <img src={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/uploads/${carData.image}`} alt={carData.namaMobil} className={styles.carImage} />
             ) : (
               <div style={{ backgroundColor: 'rgba(0,0,0,0.4)', height: '180px', borderRadius: '16px', marginBottom: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px', border: '1px solid rgba(255,255,255,0.05)' }}>
                  🚗 {carData.namaMobil}

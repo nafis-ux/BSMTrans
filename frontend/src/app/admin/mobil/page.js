@@ -16,7 +16,7 @@ export default function AdminMobilPage() {
   });
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/mobil')
+    fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/mobil`)
       .then(res => res.json())
       .then(data => { if (Array.isArray(data)) setMobilData(data); })
       .catch(err => console.error(err))
@@ -29,7 +29,7 @@ export default function AdminMobilPage() {
     if (!confirm(`Hapus unit mobil ${mobilId}?`)) return;
     const token = localStorage.getItem('token');
     try {
-      const res = await fetch(`http://localhost:5000/api/admin/mobil/${mobilId}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/admin/mobil/${mobilId}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -61,7 +61,7 @@ export default function AdminMobilPage() {
   const handleSaveEditMobil = async () => {
     const token = localStorage.getItem('token');
     try {
-      const res = await fetch(`http://localhost:5000/api/admin/mobil/${editMobilId}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/admin/mobil/${editMobilId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify(editMobilForm)
@@ -85,7 +85,7 @@ export default function AdminMobilPage() {
 
     const token = localStorage.getItem('token');
     try {
-      const res = await fetch('http://localhost:5000/api/admin/mobil/upload', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/admin/mobil/upload`, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}` },
         body: formData
@@ -110,7 +110,7 @@ export default function AdminMobilPage() {
     }
     const token = localStorage.getItem('token');
     try {
-      const res = await fetch('http://localhost:5000/api/admin/mobil', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/admin/mobil`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify(newMobilForm)
@@ -250,7 +250,7 @@ export default function AdminMobilPage() {
                       <td>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                           {mobil.image ? (
-                            <img src={`http://localhost:5000/uploads/${mobil.image}`} alt={mobil.namaMobil} style={{ width: '50px', height: '40px', objectFit: 'cover', borderRadius: '6px', border: '1px solid rgba(255,255,255,0.1)' }} />
+                            <img src={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/uploads/${mobil.image}`} alt={mobil.namaMobil} style={{ width: '50px', height: '40px', objectFit: 'cover', borderRadius: '6px', border: '1px solid rgba(255,255,255,0.1)' }} />
                           ) : (
                             <div style={{ width: '50px', height: '40px', backgroundColor: 'rgba(255,255,255,0.05)', borderRadius: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '10px', color: '#666' }}>No Img</div>
                           )}

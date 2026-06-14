@@ -29,7 +29,7 @@ export default function KonfirmasiPesananPage() {
 
     // B. Ambil data mobil terbaru untuk konfirmasi silang harga asli database
     if (id) {
-      fetch(`http://localhost:5000/api/mobil/${id}`, { cache: 'no-store' })
+      fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/mobil/${id}`, { cache: 'no-store' })
         .then(async (res) => {
           if (!res.ok) {
             const errText = await res.text();
@@ -86,7 +86,7 @@ export default function KonfirmasiPesananPage() {
     }
 
     // 2. Kirim data ke API backend Anda
-    const response = await fetch('http://localhost:5000/api/transaksi/sewa-mobil', {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/transaksi/sewa-mobil`, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${token}`
@@ -160,7 +160,7 @@ export default function KonfirmasiPesananPage() {
           <span className={styles.carBadge}>PREMIUM CLASS</span>
           {carData?.image ? (
             <div style={{ width: '100%', height: '180px', borderRadius: '12px', overflow: 'hidden', marginBottom: '20px' }}>
-              <img src={`http://localhost:5000/uploads/${carData.image}`} alt={carData.namaMobil} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              <img src={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/uploads/${carData.image}`} alt={carData.namaMobil} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
             </div>
           ) : (
             <div style={{ backgroundColor: '#121214', height: '140px', borderRadius: '12px', marginBottom: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px' }}>

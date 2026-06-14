@@ -24,7 +24,7 @@ export default function TransaksiPage() {
       setIsAuthenticated(true);
 
       try {
-        const response = await fetch('http://localhost:5000/api/transaksi/user', {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/transaksi/user`, {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`,

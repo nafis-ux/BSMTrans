@@ -13,7 +13,7 @@ export default function DropOffPage() {
   useEffect(() => {
     const fetchDropOffs = async () => {
       try {
-        const res = await fetch('http://localhost:5000/api/dropoff');
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/dropoff`);
         if (res.ok) {
           const data = await res.json();
           setDropOffServices(data);

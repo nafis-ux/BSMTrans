@@ -9,7 +9,7 @@ export default function SewaMobilPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/mobil')
+    fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/mobil`)
       .then((res) => res.json())
       .then((data) => {
         if (Array.isArray(data)) {
@@ -58,7 +58,7 @@ export default function SewaMobilPage() {
                   
                   <div className={styles.imageWrapper}>
                     {car.image ? (
-                      <img src={`http://localhost:5000/uploads/${car.image}`} alt={car.namaMobil} className={styles.carImage} />
+                      <img src={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/uploads/${car.image}`} alt={car.namaMobil} className={styles.carImage} />
                     ) : (
                       <div className={styles.imagePlaceholder}>No Image Available</div>
                     )}

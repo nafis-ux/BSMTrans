@@ -19,7 +19,7 @@ export default function AdminTravelPage() {
   const [editRuteForm, setEditRuteForm] = useState({});
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/travel')
+    fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/travel`)
       .then(res => res.json())
       .then(data => { if (Array.isArray(data)) setTravelData(data); })
       .catch(err => console.error(err))
@@ -37,7 +37,7 @@ export default function AdminTravelPage() {
 
     const token = localStorage.getItem('token');
     try {
-      const res = await fetch('http://localhost:5000/api/admin/travel/upload', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/admin/travel/upload`, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}` },
         body: formData
@@ -62,7 +62,7 @@ export default function AdminTravelPage() {
     }
     const token = localStorage.getItem('token');
     try {
-      const res = await fetch('http://localhost:5000/api/admin/travel', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/admin/travel`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify(newRuteForm)
@@ -99,7 +99,7 @@ export default function AdminTravelPage() {
   const handleSaveEditRute = async () => {
     const token = localStorage.getItem('token');
     try {
-      const res = await fetch(`http://localhost:5000/api/admin/travel/${editRuteId}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/admin/travel/${editRuteId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify(editRuteForm)
@@ -118,7 +118,7 @@ export default function AdminTravelPage() {
     if (!confirm(`Hapus rute travel ${ruteId}?`)) return;
     const token = localStorage.getItem('token');
     try {
-      const res = await fetch(`http://localhost:5000/api/admin/travel/${ruteId}`, { 
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/admin/travel/${ruteId}`, { 
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -252,7 +252,7 @@ export default function AdminTravelPage() {
                         <td>
                           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                             {rute.image ? (
-                              <img src={`http://localhost:5000/uploads/${rute.image}`} alt={rute.armada} style={{ width: '50px', height: '40px', objectFit: 'cover', borderRadius: '6px', border: '1px solid rgba(255,255,255,0.1)' }} />
+                              <img src={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/uploads/${rute.image}`} alt={rute.armada} style={{ width: '50px', height: '40px', objectFit: 'cover', borderRadius: '6px', border: '1px solid rgba(255,255,255,0.1)' }} />
                             ) : (
                               <div style={{ width: '50px', height: '40px', backgroundColor: 'rgba(255,255,255,0.05)', borderRadius: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '10px', color: '#666' }}>No Img</div>
                             )}

@@ -21,7 +21,7 @@ export default function HalamanInvoiceCetak({ params }) {
         return;
       }
       try {
-        const response = await fetch(`http://localhost:5000/api/transaksi/${transactionId}`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/transaksi/${transactionId}`, {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         const data = await response.json();

@@ -25,7 +25,7 @@ export default function DetailTransaksiPembayaranPage({ params }) {
         return;
       }
       try {
-        const response = await fetch(`http://localhost:5000/api/transaksi/${transactionId}`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/transaksi/${transactionId}`, {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         const data = await response.json();
@@ -73,7 +73,7 @@ export default function DetailTransaksiPembayaranPage({ params }) {
       const formData = new FormData();
       formData.append('buktiDP', file);
 
-      const response = await fetch(`http://localhost:5000/api/transaksi/${transactionId}/bukti-dp`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/transaksi/${transactionId}/bukti-dp`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`

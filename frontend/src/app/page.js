@@ -13,7 +13,7 @@ export default function Home() {
 
   useEffect(() => {
     // Fetch Mobil
-    fetch('http://localhost:5000/api/mobil')
+    fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/mobil`)
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) setFeaturedCars(data.slice(0, 3));
@@ -21,7 +21,7 @@ export default function Home() {
       .catch(err => console.error("Gagal load armada:", err));
 
     // Fetch Travel
-    fetch('http://localhost:5000/api/travel')
+    fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/travel`)
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) setTravelRoutes(data.slice(0, 3));
@@ -29,7 +29,7 @@ export default function Home() {
       .catch(err => console.error("Gagal load travel:", err));
 
     // Fetch Drop Off
-    fetch('http://localhost:5000/api/dropoff')
+    fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/dropoff`)
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) setDropOffServices(data.slice(0, 3));
@@ -187,7 +187,7 @@ export default function Home() {
               <div key={car.id} className={styles.fleetCard}>
                 <div className={styles.fleetImageWrapper}>
                   {car.image ? (
-                    <img src={`http://localhost:5000/uploads/${car.image}`} alt={car.namaMobil} className={styles.fleetImage} />
+                    <img src={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/uploads/${car.image}`} alt={car.namaMobil} className={styles.fleetImage} />
                   ) : (
                     <div className={styles.fleetImagePlaceholder}>No Image</div>
                   )}
@@ -252,7 +252,7 @@ export default function Home() {
               <div key={route.id} className={styles.fleetCard}>
                 <div className={styles.fleetImageWrapper}>
                   {route.image ? (
-                    <img src={`http://localhost:5000/uploads/${route.image}`} alt={route.armada} className={styles.fleetImage} />
+                    <img src={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/uploads/${route.image}`} alt={route.armada} className={styles.fleetImage} />
                   ) : (
                     <div className={styles.fleetImagePlaceholder} style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
                       <span style={{ fontSize: '28px' }}>🚐</span>

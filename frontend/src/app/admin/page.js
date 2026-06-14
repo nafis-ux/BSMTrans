@@ -12,8 +12,8 @@ export default function AdminDashboardPage() {
     const headers = { 'Authorization': `Bearer ${token}` };
 
     Promise.all([
-      fetch('http://localhost:5000/api/admin/dashboard', { headers }).then(r => r.json()),
-      fetch('http://localhost:5000/api/admin/transaksi', { headers }).then(r => r.json())
+      fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/admin/dashboard`, { headers }).then(r => r.json()),
+      fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/admin/transaksi`, { headers }).then(r => r.json())
     ])
     .then(([statsData, trxData]) => {
       if (!statsData.error) setStats(statsData);
