@@ -166,6 +166,10 @@ export default function DetailTransaksiPembayaranPage({ params }) {
             <p className={styles.qrText}>
               Scan QRIS untuk pembayaran instant via E-Wallet
             </p>
+            <div style={{ marginTop: '15px', padding: '10px', backgroundColor: '#16171a', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)', color: '#ccc', fontSize: '13px', textAlign: 'left' }}>
+              <strong>Bank BCA:</strong> 2630677095<br/>
+              a/n HADIP FAHMI
+            </div>
           </div>
 
           {/* KANAN: FORM UPLOAD */}
