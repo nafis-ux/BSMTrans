@@ -111,7 +111,7 @@ export default function DetailTransaksiPembayaranPage({ params }) {
   }
 
   const statusLower = transaction?.status?.toLowerCase();
-  
+
   // DP adalah 50% dari total tagihan
   const totalTagihan = transaction?.totalHarga || 0;
   const nominalDP = totalTagihan * 0.5;
@@ -132,7 +132,7 @@ export default function DetailTransaksiPembayaranPage({ params }) {
   return (
     <div className={styles.container}>
       <div className={styles.paymentCard}>
-        
+
         {/* HEADER */}
         <h1 className={styles.title}>Pembayaran DP (50%)</h1>
         <p className={styles.subtitle}>Selesaikan pembayaran untuk pesanan #{transactionId}</p>
@@ -148,15 +148,11 @@ export default function DetailTransaksiPembayaranPage({ params }) {
 
         {/* GRID KONTEN TENGAH */}
         <div className={styles.contentGrid}>
-          
+
           {/* KIRI: QR CODE */}
           <div className={styles.qrWrapper}>
-            <div style={{ marginBottom: '15px', padding: '10px', backgroundColor: '#16171a', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)', color: '#ccc', fontSize: '13px', textAlign: 'left' }}>
-              <strong>Bank BCA:</strong> 123-456-7890<br/>
-              a/n PT. BSM Trans Mandiri
-            </div>
             <div className={styles.qrBox}>
-              <img 
+              <img
                 src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=BSMTrans-DP-${transactionId}-${nominalDP}`}
                 alt="QRIS BSMTrans"
                 width={150}
@@ -167,7 +163,7 @@ export default function DetailTransaksiPembayaranPage({ params }) {
               Scan QRIS untuk pembayaran instant via E-Wallet
             </p>
             <div style={{ marginTop: '15px', padding: '10px', backgroundColor: '#16171a', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)', color: '#ccc', fontSize: '13px', textAlign: 'left' }}>
-              <strong>Bank BCA:</strong> 2630677095<br/>
+              <strong>Bank BCA:</strong> 2630677095<br />
               a/n HADIP FAHMI
             </div>
           </div>
@@ -175,29 +171,29 @@ export default function DetailTransaksiPembayaranPage({ params }) {
           {/* KANAN: FORM UPLOAD */}
           <div className={styles.uploadBox}>
             <h3 className={styles.uploadTitle}>Upload Bukti Pembayaran DP</h3>
-            
+
             {statusLower === 'pending' ? (
               <>
                 <label className={styles.dropzone}>
-                  <input 
-                    type="file" 
-                    accept="image/*" 
-                    hidden 
-                    onChange={handleFileChange} 
+                  <input
+                    type="file"
+                    accept="image/*"
+                    hidden
+                    onChange={handleFileChange}
                   />
                   <div className={styles.uploadIcon}>🖴</div>
                   <p className={styles.dropzoneText}>
                     <span>Klik untuk upload</span> atau drag and drop
                   </p>
                   <p className={styles.fileHint}>Resi transfer (PNG, JPG up to 5MB)</p>
-                  
+
                   {fileName && (
                     <div className={styles.fileSelected}>✓ {fileName}</div>
                   )}
                 </label>
 
-                <button 
-                  className={styles.btnSubmit} 
+                <button
+                  className={styles.btnSubmit}
                   onClick={handleUploadSubmit}
                   disabled={isSubmitting}
                 >
@@ -225,12 +221,12 @@ export default function DetailTransaksiPembayaranPage({ params }) {
 
         {/* STATUS PROGRESS TRACKER */}
         <div className={styles.statusHeader}>Status Pembayaran</div>
-        
+
         <div className={styles.statusTrack}>
-          <div 
-            className={styles.statusLineProgress} 
-            style={{ 
-              width: getProgressWidth() 
+          <div
+            className={styles.statusLineProgress}
+            style={{
+              width: getProgressWidth()
             }}
           ></div>
           <div className={styles.statusLine}></div>
