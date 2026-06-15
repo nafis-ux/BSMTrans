@@ -134,6 +134,10 @@ export default function BayarSisaLayanan({ params }) {
             <div style={{ padding: '14px', backgroundColor: '#16171a', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)', color: '#ccc', fontSize: '14px' }}>
               <strong>Bank BCA:</strong> 123-456-7890 a/n PT. BSM Trans Mandiri
             </div>
+            <div style={{ marginTop: '15px', padding: '14px', backgroundColor: '#16171a', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)', color: '#ccc', fontSize: '14px' }}>
+              <strong>Bank BCA:</strong> 2630677095<br/>
+              a/n HADIP FAHMI
+            </div>
           </div>
 
           <div style={{ marginBottom: '32px' }}>
