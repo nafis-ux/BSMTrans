@@ -113,7 +113,7 @@ export default function BayarSisaLayanan({ params }) {
   return (
     <div className={styles.container} style={{ maxWidth: '800px', margin: '40px auto' }}>
       <div style={{ backgroundColor: '#111217', borderRadius: '14px', padding: '32px', border: '1px solid rgba(255,255,255,0.05)' }}>
-        
+
         <button onClick={() => router.back()} style={{ background: 'none', border: 'none', color: '#dfb143', cursor: 'pointer', marginBottom: '20px' }}>
           ← Kembali ke Transaksi
         </button>
@@ -131,22 +131,19 @@ export default function BayarSisaLayanan({ params }) {
         <form onSubmit={handleFormSubmit}>
           <div style={{ marginBottom: '24px' }}>
             <label style={{ display: 'block', fontSize: '14px', marginBottom: '8px', color: '#fff' }}>Metode Transfer Bank Pengelola</label>
-            <div style={{ padding: '14px', backgroundColor: '#16171a', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)', color: '#ccc', fontSize: '14px' }}>
-              <strong>Bank BCA:</strong> 123-456-7890 a/n PT. BSM Trans Mandiri
-            </div>
             <div style={{ marginTop: '15px', padding: '14px', backgroundColor: '#16171a', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)', color: '#ccc', fontSize: '14px' }}>
-              <strong>Bank BCA:</strong> 2630677095<br/>
+              <strong>Bank BCA:</strong> 2630677095<br />
               a/n HADIP FAHMI
             </div>
           </div>
 
           <div style={{ marginBottom: '32px' }}>
             <label style={{ display: 'block', fontSize: '14px', marginBottom: '8px', color: '#fff' }}>Unggah Slip/Struk Bukti Pelunasan</label>
-            <input 
-              type="file" 
-              accept="image/*" 
-              id="file-sisa" 
-              style={{ display: 'none' }} 
+            <input
+              type="file"
+              accept="image/*"
+              id="file-sisa"
+              style={{ display: 'none' }}
               onChange={handleFileChange}
             />
             <label htmlFor="file-sisa" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '54px', border: '1px dashed rgba(255,255,255,0.2)', borderRadius: '8px', cursor: 'pointer', backgroundColor: '#16171a' }}>
@@ -154,8 +151,8 @@ export default function BayarSisaLayanan({ params }) {
             </label>
           </div>
 
-          <button 
-            type="submit" 
+          <button
+            type="submit"
             disabled={isSubmitting}
             style={{ width: '100%', backgroundColor: '#dfb143', color: '#000', border: 'none', height: '48px', borderRadius: '8px', fontWeight: '700', cursor: 'pointer' }}
           >
