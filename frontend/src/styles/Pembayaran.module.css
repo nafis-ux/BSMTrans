@@ -35,6 +35,15 @@
   margin-bottom: 35px;
 }
 
+/* Sisi Info Bank */
+.bankInfoWrapper {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 24px;
+  border-radius: 12px;
+  text-align: center;
+}
+
 .priceSection {
   margin-bottom: 40px;
 }
@@ -63,32 +72,7 @@
   margin-bottom: 40px;
 }
 
-/* Sisi QR */
-.qrWrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
 
-.qrBox {
-  background-color: #ffffff;
-  padding: 16px;
-  border-radius: 16px;
-  width: 100%;
-  max-width: 180px;
-  aspect-ratio: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 16px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-}
-
-.qrText {
-  font-size: 12px;
-  color: #a0a5b0;
-  line-height: 1.5;
-}
 
 /* Sisi Upload */
 .uploadBox {

@@ -226,7 +226,7 @@ const formatTanggalAman = (tanggal) => {
                       </div>
                       <div className={styles.tripActionRow}>
                         {trip.status === 'Menunggu' ? (
-                          <Link href={`/transaksi/${trip.id}`} className={styles.btnTripPay}>Bayar Sekarang (Scan QRIS) →</Link>
+                          <Link href={`/transaksi/${trip.id}`} className={styles.btnTripPay}>Bayar Sekarang →</Link>
                         ) : trip.status === 'Aktif' ? (
                           <button className={styles.btnTripInfo} onClick={() => alert(`Tiket digital dikirim ke WhatsApp ${profileData.noHandphone}`)}>Kirim E-Tiket ke WA</button>
                         ) : (

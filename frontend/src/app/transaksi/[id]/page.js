@@ -149,19 +149,8 @@ export default function DetailTransaksiPembayaranPage({ params }) {
         {/* GRID KONTEN TENGAH */}
         <div className={styles.contentGrid}>
 
-          {/* KIRI: QR CODE */}
-          <div className={styles.qrWrapper}>
-            <div className={styles.qrBox}>
-              <img
-                src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=BSMTrans-DP-${transactionId}-${nominalDP}`}
-                alt="QRIS BSMTrans"
-                width={150}
-                height={150}
-              />
-            </div>
-            <p className={styles.qrText}>
-              Scan QRIS untuk pembayaran instant via E-Wallet
-            </p>
+          {/* KIRI: INFO BANK */}
+          <div className={styles.bankInfoWrapper}>
             <div style={{ marginTop: '15px', padding: '10px', backgroundColor: '#16171a', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)', color: '#ccc', fontSize: '13px', textAlign: 'left' }}>
               <strong>Bank BCA:</strong> 2630677095<br />
               a/n HADIP FAHMI
