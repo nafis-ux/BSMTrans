@@ -66,8 +66,7 @@ const createTransaksi = async (req, res) => {
         message: "Transaksi travel berhasil dibuat",
         transaksiId: transaksiBaru.id
       });
-
-
+    } else {
       // Default ke SEWA_MOBIL
       const { carId, rentalDate, duration, driverService } = req.body;
 
