@@ -179,13 +179,19 @@ const updateMobil = async (req, res) => {
 const updateMobilImage = async (req, res) => {
   try {
     const { id } = req.params;
+    console.log('[updateMobilImage] ID:', id);
+    console.log('[updateMobilImage] req.file:', req.file ? { path: req.file.path, filename: req.file.filename } : 'NO FILE');
     if (!req.file) return res.status(400).json({ error: "Tidak ada file yang diunggah" });
+
+    const imageUrl = req.file.path;
+    console.log('[updateMobilImage] Saving imageUrl to DB:', imageUrl);
 
     const mobil = await prisma.mobil.update({
       where: { id },
-      data: { image: req.file.path }
+      data: { image: imageUrl }
     });
-    res.status(200).json({ message: "Gambar mobil berhasil diperbarui.", filename: req.file.path, mobil });
+    console.log('[updateMobilImage] DB result image:', mobil.image);
+    res.status(200).json({ message: "Gambar mobil berhasil diperbarui.", filename: imageUrl, mobil });
   } catch (error) {
     console.error("Update Mobil Image Error:", error);
     res.status(500).json({ error: "Gagal memperbarui gambar mobil: " + error.message });
@@ -209,8 +215,15 @@ const createMobil = async (req, res) => {
   try {
     const { namaMobil, tipe, hargaPerHari, biayaDriver, statusTersedia, kursi, bagasi, transmisi, fiturLain, image } = req.body;
     
+    console.log('[createMobil] req.body:', JSON.stringify(req.body));
+    console.log('[createMobil] image value:', JSON.stringify(image), 'type:', typeof image);
+
     // Generate ID otomatis (MBL- + 4 digit angka random)
     const randomId = `MBL-${Math.floor(1000 + Math.random() * 9000)}`;
+
+    // Pastikan image yang kosong jadi null
+    const imageValue = (image && image.trim && image.trim() !== '') ? image.trim() : null;
+    console.log('[createMobil] imageValue to save:', imageValue);
 
     const newMobil = await prisma.mobil.create({
       data: {
@@ -224,10 +237,11 @@ const createMobil = async (req, res) => {
         bagasi: parseInt(bagasi) || 2,
         transmisi: transmisi || "Manual",
         fiturLain: fiturLain || "AC, Audio",
-        image: image || null
+        image: imageValue
       }
     });
 
+    console.log('[createMobil] DB result:', JSON.stringify({ id: newMobil.id, image: newMobil.image }));
     res.status(201).json({ message: "Armada baru berhasil ditambahkan", mobil: newMobil });
   } catch (error) {
     console.error("Create Mobil Error:", error);
@@ -297,7 +311,14 @@ const createTravel = async (req, res) => {
   try {
     const { asal, tujuan, hargaTiket, jadwal, armada, totalKursi, fasilitas, estimasiWaktu, titikKumpul, titikTurun, image } = req.body;
     
+    console.log('[createTravel] req.body:', JSON.stringify(req.body));
+    console.log('[createTravel] image value:', JSON.stringify(image), 'type:', typeof image);
+
     const randomId = `TRV-${Date.now()}`;
+
+    // Pastikan image yang kosong jadi null
+    const imageValue = (image && image.trim && image.trim() !== '') ? image.trim() : null;
+    console.log('[createTravel] imageValue to save:', imageValue);
 
     const newTravel = await prisma.ruteTravel.create({
       data: {
@@ -313,10 +334,11 @@ const createTravel = async (req, res) => {
         estimasiWaktu: estimasiWaktu || "8 Jam",
         titikKumpul: titikKumpul || "Pool BSM",
         titikTurun: titikTurun || "Terminal Tujuan",
-        image: image || null
+        image: imageValue
       }
     });
 
+    console.log('[createTravel] DB result:', JSON.stringify({ id: newTravel.id, image: newTravel.image }));
     res.status(201).json({ message: "Rute travel baru berhasil ditambahkan", travel: newTravel });
   } catch (error) {
     console.error("Create Travel Error:", error);
@@ -359,13 +381,19 @@ const updateTravel = async (req, res) => {
 const updateTravelImage = async (req, res) => {
   try {
     const { id } = req.params;
+    console.log('[updateTravelImage] ID:', id);
+    console.log('[updateTravelImage] req.file:', req.file ? { path: req.file.path, filename: req.file.filename } : 'NO FILE');
     if (!req.file) return res.status(400).json({ error: "Tidak ada file yang diunggah" });
+
+    const imageUrl = req.file.path;
+    console.log('[updateTravelImage] Saving imageUrl to DB:', imageUrl);
 
     const travel = await prisma.ruteTravel.update({
       where: { id },
-      data: { image: req.file.path }
+      data: { image: imageUrl }
     });
-    res.status(200).json({ message: "Gambar travel berhasil diperbarui.", filename: req.file.path, travel });
+    console.log('[updateTravelImage] DB result image:', travel.image);
+    res.status(200).json({ message: "Gambar travel berhasil diperbarui.", filename: imageUrl, travel });
   } catch (error) {
     console.error("Update Travel Image Error:", error);
     res.status(500).json({ error: "Gagal memperbarui gambar travel: " + error.message });
