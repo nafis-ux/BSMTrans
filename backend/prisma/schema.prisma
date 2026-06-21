@@ -39,7 +39,7 @@ model Mobil {
   bagasi         Int
   transmisi      String
   fiturLain      String?
-  image          String?
+  image          String?         @db.Text
   transaksiSewa  Transaksi[]
 }
 
@@ -56,7 +56,7 @@ model RuteTravel {
   estimasiWaktu   String?     @default("8 Jam")
   titikKumpul     String?     @default("Pool BSM")
   titikTurun      String?     @default("Terminal Tujuan")
-  image           String?
+  image           String?     @db.Text
   transaksiTravel Transaksi[]
 }
 

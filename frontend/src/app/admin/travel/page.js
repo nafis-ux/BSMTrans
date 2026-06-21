@@ -39,8 +39,15 @@ export default function AdminTravelPage() {
 
     const token = localStorage.getItem('token');
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/admin/travel/upload`, {
-        method: 'POST',
+      const isDirectUpdate = isEdit && editRuteId;
+      const url = isDirectUpdate 
+        ? `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/admin/travel/${editRuteId}/image`
+        : `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/admin/travel/upload`;
+      
+      const method = isDirectUpdate ? 'PUT' : 'POST';
+
+      const res = await fetch(url, {
+        method: method,
         headers: { 'Authorization': `Bearer ${token}` },
         body: formData
       });
@@ -49,6 +56,8 @@ export default function AdminTravelPage() {
 
       if (isEdit) {
         setEditRuteForm(prev => ({ ...prev, image: data.filename }));
+        // Update data langsung di tabel (tidak perlu klik Simpan lagi khusus gambar)
+        setTravelData(prev => prev.map(r => r.id === editRuteId ? { ...r, image: data.filename } : r));
       } else {
         setNewRuteForm(prev => ({ ...prev, image: data.filename }));
       }

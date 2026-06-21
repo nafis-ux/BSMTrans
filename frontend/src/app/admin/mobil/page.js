@@ -86,8 +86,15 @@ export default function AdminMobilPage() {
 
     const token = localStorage.getItem('token');
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/admin/mobil/upload`, {
-        method: 'POST',
+      const isDirectUpdate = isEdit && editMobilId;
+      const url = isDirectUpdate 
+        ? `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/admin/mobil/${editMobilId}/image`
+        : `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/admin/mobil/upload`;
+      
+      const method = isDirectUpdate ? 'PUT' : 'POST';
+
+      const res = await fetch(url, {
+        method: method,
         headers: { 'Authorization': `Bearer ${token}` },
         body: formData
       });
@@ -96,6 +103,8 @@ export default function AdminMobilPage() {
 
       if (isEdit) {
         setEditMobilForm(prev => ({ ...prev, image: data.filename }));
+        // Update data langsung di tabel (tidak perlu klik Simpan lagi khusus gambar)
+        setMobilData(prev => prev.map(m => m.id === editMobilId ? { ...m, image: data.filename } : m));
       } else {
         setNewMobilForm(prev => ({ ...prev, image: data.filename }));
       }
