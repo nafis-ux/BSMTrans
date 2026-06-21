@@ -113,11 +113,9 @@ export default function KonfirmasiTiketTravelPage() {
         {/* Detail Rute Utama Dinamis */}
         <div className={styles.routeHeader}>
           <span className={styles.badge}>EXECUTIVE LINE</span>
-          {routeDetail?.image ? (
-            <div style={{ width: '100%', height: '160px', borderRadius: '12px', overflow: 'hidden', marginBottom: '20px' }}>
-              <img src={getImageUrl(routeDetail.image)} alt={routeDetail.armada} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-            </div>
-          ) : null}
+          <div style={{ width: '100%', height: '160px', borderRadius: '12px', overflow: 'hidden', marginBottom: '20px' }}>
+            <img src={getImageUrl(routeDetail?.image)} alt={routeDetail?.armada} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+          </div>
           <h2 className={styles.routeTitle}>{routeDetail?.asal} → {routeDetail?.tujuan}</h2>
           <p className={styles.armadaName}>🚌 {routeDetail?.armada}</p>
         </div>

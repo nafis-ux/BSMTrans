@@ -210,11 +210,9 @@ export default function BookingTravelPage() {
         <div className={styles.summaryCard}>
           <div className={styles.routePreview}>
             <span className={styles.routeBadge}>EXECUTIVE LINE</span>
-            {routeDetail.image ? (
-               <div style={{ width: '100%', height: '160px', borderRadius: '12px', overflow: 'hidden', marginBottom: '20px' }}>
-                 <img src={getImageUrl(routeDetail.image)} alt={routeDetail.armada} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-               </div>
-            ) : null}
+            <div style={{ width: '100%', height: '160px', borderRadius: '12px', overflow: 'hidden', marginBottom: '20px' }}>
+              <img src={getImageUrl(routeDetail.image)} alt={routeDetail.armada} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+            </div>
             <h2 className={styles.routeTitle}>{routeDetail.asal} → {routeDetail.tujuan}</h2>
             <p style={{ color: '#a0a5b1', fontSize: '13px', marginTop: '6px' }}>🚌 {routeDetail.armada}</p>
           </div>

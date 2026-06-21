@@ -63,11 +63,9 @@ export default function TravelPage() {
               routes.map((route) => (
                 <div key={route.id} className={styles.travelCard}>
                   
-                  {route.image ? (
-                    <div style={{ width: '100%', height: '180px', borderRadius: '12px', overflow: 'hidden', marginBottom: '20px' }}>
-                      <img src={getImageUrl(route.image)} alt={route.armada} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                    </div>
-                  ) : null}
+                  <div style={{ width: '100%', height: '180px', borderRadius: '12px', overflow: 'hidden', marginBottom: '20px' }}>
+                    <img src={getImageUrl(route.image)} alt={route.armada} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  </div>
                   
                   <div className={styles.routeHeader}>
                     <div className={styles.routeInfo}>
