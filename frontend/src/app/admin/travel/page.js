@@ -63,6 +63,9 @@ export default function AdminTravelPage() {
       }
     } catch (err) {
       alert("Gagal upload gambar: " + err.message);
+    } finally {
+      // Reset input file agar file yang sama bisa di-upload berulang kali
+      e.target.value = '';
     }
   };
 
