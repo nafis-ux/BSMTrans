@@ -175,6 +175,23 @@ const updateMobil = async (req, res) => {
   }
 };
 
+// UPDATE GAMBAR MOBIL LANGSUNG (PUT)
+const updateMobilImage = async (req, res) => {
+  try {
+    const { id } = req.params;
+    if (!req.file) return res.status(400).json({ error: "Tidak ada file yang diunggah" });
+
+    const mobil = await prisma.mobil.update({
+      where: { id },
+      data: { image: req.file.path }
+    });
+    res.status(200).json({ message: "Gambar mobil berhasil diperbarui.", filename: req.file.path, mobil });
+  } catch (error) {
+    console.error("Update Mobil Image Error:", error);
+    res.status(500).json({ error: "Gagal memperbarui gambar mobil: " + error.message });
+  }
+};
+
 // 5. HAPUS MOBIL
 const deleteMobil = async (req, res) => {
   try {
@@ -338,6 +355,23 @@ const updateTravel = async (req, res) => {
   }
 };
 
+// UPDATE GAMBAR TRAVEL LANGSUNG (PUT)
+const updateTravelImage = async (req, res) => {
+  try {
+    const { id } = req.params;
+    if (!req.file) return res.status(400).json({ error: "Tidak ada file yang diunggah" });
+
+    const travel = await prisma.ruteTravel.update({
+      where: { id },
+      data: { image: req.file.path }
+    });
+    res.status(200).json({ message: "Gambar travel berhasil diperbarui.", filename: req.file.path, travel });
+  } catch (error) {
+    console.error("Update Travel Image Error:", error);
+    res.status(500).json({ error: "Gagal memperbarui gambar travel: " + error.message });
+  }
+};
+
 // 12. DELETE RUTE TRAVEL
 const deleteTravel = async (req, res) => {
   try {
@@ -357,10 +391,12 @@ module.exports = {
   updateMobil,
   deleteMobil,
   createMobil,
+  updateMobilImage,
   getAdminProfile,
   updateAdminProfile,
   updateAdminSettings,
   createTravel,
   updateTravel,
-  deleteTravel
+  deleteTravel,
+  updateTravelImage
 };

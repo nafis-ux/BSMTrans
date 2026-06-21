@@ -15,12 +15,14 @@ const {
   updateMobil,
   deleteMobil,
   createMobil,
+  updateMobilImage,
   getAdminProfile,
   updateAdminProfile,
   updateAdminSettings,
   createTravel,
   updateTravel,
-  deleteTravel
+  deleteTravel,
+  updateTravelImage
 } = require('../controllers/adminController');
 
 // Semua rute di bawah ini memerlukan login (verifyToken) + hak admin (verifyAdmin)
@@ -39,6 +41,7 @@ router.post('/mobil/upload', verifyToken, verifyAdmin, uploadCloudinary.single('
   if (!req.file) return res.status(400).json({ error: "Tidak ada file yang diunggah" });
   res.status(200).json({ message: "Upload sukses", filename: req.file.path });
 });
+router.put('/mobil/:id/image', verifyToken, verifyAdmin, uploadCloudinary.single('image'), updateMobilImage);
 router.post('/mobil', verifyToken, verifyAdmin, createMobil);
 router.put('/mobil/:id', verifyToken, verifyAdmin, updateMobil);
 router.delete('/mobil/:id', verifyToken, verifyAdmin, deleteMobil);
@@ -48,6 +51,7 @@ router.post('/travel/upload', verifyToken, verifyAdmin, uploadCloudinary.single(
   if (!req.file) return res.status(400).json({ error: "Tidak ada file yang diunggah" });
   res.status(200).json({ message: "Upload sukses", filename: req.file.path });
 });
+router.put('/travel/:id/image', verifyToken, verifyAdmin, uploadCloudinary.single('image'), updateTravelImage);
 router.post('/travel', verifyToken, verifyAdmin, createTravel);
 router.put('/travel/:id', verifyToken, verifyAdmin, updateTravel);
 router.delete('/travel/:id', verifyToken, verifyAdmin, deleteTravel);
