@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from 'react';
 import { useSearchParams, useParams, useRouter } from 'next/navigation';
+import { getImageUrl } from '@/utils/getImageUrl';
 import styles from '@/styles/KonfirmasiTravel.module.css';
 
 export default function KonfirmasiTiketTravelPage() {
@@ -114,7 +115,7 @@ export default function KonfirmasiTiketTravelPage() {
           <span className={styles.badge}>EXECUTIVE LINE</span>
           {routeDetail?.image ? (
             <div style={{ width: '100%', height: '160px', borderRadius: '12px', overflow: 'hidden', marginBottom: '20px' }}>
-              <img src={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/uploads/${routeDetail.image}`} alt={routeDetail.armada} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              <img src={getImageUrl(routeDetail.image)} alt={routeDetail.armada} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
             </div>
           ) : null}
           <h2 className={styles.routeTitle}>{routeDetail?.asal} → {routeDetail?.tujuan}</h2>

@@ -176,7 +176,7 @@ const uploadBuktiDP = async (req, res) => {
       return res.status(400).json({ error: "Berkas resi bukti transfer DP wajib diunggah!" });
     }
 
-    const filename = req.file.filename;
+    const filename = req.file.path;
 
     const transaksi = await prisma.transaksi.findUnique({
       where: { id: id }
@@ -217,7 +217,7 @@ const uploadBuktiSisa = async (req, res) => {
       return res.status(400).json({ error: "Berkas resi bukti transfer pelunasan sisa wajib diunggah!" });
     }
 
-    const filename = req.file.filename;
+    const filename = req.file.path;
 
     const transaksi = await prisma.transaksi.findUnique({
       where: { id: id }

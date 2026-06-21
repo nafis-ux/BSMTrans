@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { getImageUrl } from '@/utils/getImageUrl';
 import Link from 'next/link';
 import styles from '@/styles/Travel.module.css';
 
@@ -64,7 +65,7 @@ export default function TravelPage() {
                   
                   {route.image ? (
                     <div style={{ width: '100%', height: '180px', borderRadius: '12px', overflow: 'hidden', marginBottom: '20px' }}>
-                      <img src={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/uploads/${route.image}`} alt={route.armada} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                      <img src={getImageUrl(route.image)} alt={route.armada} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                     </div>
                   ) : null}
                   

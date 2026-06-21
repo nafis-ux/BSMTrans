@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { getImageUrl } from '@/utils/getImageUrl';
 import styles from '../styles/Home.module.css';
 
 export default function Home() {
@@ -156,7 +157,7 @@ export default function Home() {
               <div key={car.id} className={styles.fleetCard}>
                 <div className={styles.fleetImageWrapper}>
                   {car.image ? (
-                    <img src={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/uploads/${car.image}`} alt={car.namaMobil} className={styles.fleetImage} />
+                    <img src={getImageUrl(car.image)} alt={car.namaMobil} className={styles.fleetImage} />
                   ) : (
                     <div className={styles.fleetImagePlaceholder}>No Image</div>
                   )}
@@ -221,7 +222,7 @@ export default function Home() {
               <div key={route.id} className={styles.fleetCard}>
                 <div className={styles.fleetImageWrapper}>
                   {route.image ? (
-                    <img src={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/uploads/${route.image}`} alt={route.armada} className={styles.fleetImage} />
+                    <img src={getImageUrl(route.image)} alt={route.armada} className={styles.fleetImage} />
                   ) : (
                     <div className={styles.fleetImagePlaceholder} style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
                       <span style={{ fontSize: '28px' }}>🚐</span>

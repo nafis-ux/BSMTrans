@@ -6,21 +6,7 @@ const fs = require('fs');
 
 const upload = multer(); // Menginisialisasi multer untuk membaca FormData
 
-// Disk storage untuk upload bukti pembayaran
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    const dir = './uploads';
-    if (!fs.existsSync(dir)){
-      fs.mkdirSync(dir, { recursive: true });
-    }
-    cb(null, dir);
-  },
-  filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
-  }
-});
-const uploadDisk = multer({ storage: storage });
+const { uploadCloudinary } = require('../config/cloudinary');
 
 // 1. IMPORT MIDDLEWARE AUTH & CONTROLLER
 const { verifyToken } = require('../middleware/authMiddleware'); 
@@ -39,10 +25,10 @@ router.post('/sewa-mobil', verifyToken, upload.single('fotoKTP'), createTransaks
 router.post('/', verifyToken, createTransaksi);
 
 // Rute untuk mengunggah bukti DP
-router.post('/:id/bukti-dp', verifyToken, uploadDisk.single('buktiDP'), uploadBuktiDP);
+router.post('/:id/bukti-dp', verifyToken, uploadCloudinary.single('buktiDP'), uploadBuktiDP);
 
 // Rute untuk mengunggah bukti pelunasan
-router.post('/:id/bukti-sisa', verifyToken, uploadDisk.single('buktiSisa'), uploadBuktiSisa);
+router.post('/:id/bukti-sisa', verifyToken, uploadCloudinary.single('buktiSisa'), uploadBuktiSisa);
 
 // Ambil token dulu -> ambil daftar transaksi milik user tersebut
 router.get('/user', verifyToken, getTransaksiByUserId);

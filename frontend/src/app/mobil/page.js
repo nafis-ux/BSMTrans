@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { getImageUrl } from '@/utils/getImageUrl';
 import styles from '@/styles/Mobil.module.css';
 
 export default function SewaMobilPage() {
@@ -58,7 +59,7 @@ export default function SewaMobilPage() {
                   
                   <div className={styles.imageWrapper}>
                     {car.image ? (
-                      <img src={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/uploads/${car.image}`} alt={car.namaMobil} className={styles.carImage} />
+                      <img src={getImageUrl(car.image)} alt={car.namaMobil} className={styles.carImage} />
                     ) : (
                       <div className={styles.imagePlaceholder}>No Image Available</div>
                     )}

@@ -1,5 +1,7 @@
 "use client";
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { getImageUrl } from '@/utils/getImageUrl';
 import styles from '@/styles/AdminDashboard.module.css';
 
 export default function AdminTravelPage() {
@@ -252,7 +254,7 @@ export default function AdminTravelPage() {
                         <td>
                           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                             {rute.image ? (
-                              <img src={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/uploads/${rute.image}`} alt={rute.armada} style={{ width: '50px', height: '40px', objectFit: 'cover', borderRadius: '6px', border: '1px solid rgba(255,255,255,0.1)' }} />
+                              <img src={getImageUrl(rute.image)} alt={rute.armada} style={{ width: '50px', height: '40px', objectFit: 'cover', borderRadius: '6px', border: '1px solid rgba(255,255,255,0.1)' }} />
                             ) : (
                               <div style={{ width: '50px', height: '40px', backgroundColor: 'rgba(255,255,255,0.05)', borderRadius: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '10px', color: '#666' }}>No Img</div>
                             )}

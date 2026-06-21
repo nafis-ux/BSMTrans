@@ -4,19 +4,7 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 
-// Konfigurasi storage multer untuk upload gambar mobil
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    const dir = path.join(__dirname, '../../uploads');
-    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-    cb(null, dir);
-  },
-  filename: (req, file, cb) => {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    cb(null, 'mobil-' + uniqueSuffix + path.extname(file.originalname));
-  }
-});
-const upload = multer({ storage });
+const { uploadCloudinary } = require('../config/cloudinary');
 
 const { verifyToken } = require('../middleware/authMiddleware');
 const { verifyAdmin } = require('../middleware/adminMiddleware');
@@ -47,18 +35,18 @@ router.get('/transaksi', verifyToken, verifyAdmin, getAllTransaksi);
 router.put('/transaksi/:id/status', verifyToken, verifyAdmin, updateStatusTransaksi);
 
 // Kelola data mobil
-router.post('/mobil/upload', verifyToken, verifyAdmin, upload.single('image'), (req, res) => {
+router.post('/mobil/upload', verifyToken, verifyAdmin, uploadCloudinary.single('image'), (req, res) => {
   if (!req.file) return res.status(400).json({ error: "Tidak ada file yang diunggah" });
-  res.status(200).json({ message: "Upload sukses", filename: req.file.filename });
+  res.status(200).json({ message: "Upload sukses", filename: req.file.path });
 });
 router.post('/mobil', verifyToken, verifyAdmin, createMobil);
 router.put('/mobil/:id', verifyToken, verifyAdmin, updateMobil);
 router.delete('/mobil/:id', verifyToken, verifyAdmin, deleteMobil);
 
 // Kelola data rute travel
-router.post('/travel/upload', verifyToken, verifyAdmin, upload.single('image'), (req, res) => {
+router.post('/travel/upload', verifyToken, verifyAdmin, uploadCloudinary.single('image'), (req, res) => {
   if (!req.file) return res.status(400).json({ error: "Tidak ada file yang diunggah" });
-  res.status(200).json({ message: "Upload sukses", filename: req.file.filename });
+  res.status(200).json({ message: "Upload sukses", filename: req.file.path });
 });
 router.post('/travel', verifyToken, verifyAdmin, createTravel);
 router.put('/travel/:id', verifyToken, verifyAdmin, updateTravel);

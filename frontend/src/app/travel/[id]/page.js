@@ -1,6 +1,8 @@
 "use client";
 import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
+import DatePicker from "react-datepicker";
+import { getImageUrl } from '@/utils/getImageUrl';
 import styles from '@/styles/BookingTravel.module.css';
 
 export default function BookingTravelPage() {
@@ -210,7 +212,7 @@ export default function BookingTravelPage() {
             <span className={styles.routeBadge}>EXECUTIVE LINE</span>
             {routeDetail.image ? (
                <div style={{ width: '100%', height: '160px', borderRadius: '12px', overflow: 'hidden', marginBottom: '20px' }}>
-                 <img src={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/uploads/${routeDetail.image}`} alt={routeDetail.armada} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                 <img src={getImageUrl(routeDetail.image)} alt={routeDetail.armada} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                </div>
             ) : null}
             <h2 className={styles.routeTitle}>{routeDetail.asal} → {routeDetail.tujuan}</h2>

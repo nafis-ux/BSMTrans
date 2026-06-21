@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from 'react';
+import { getImageUrl } from '@/utils/getImageUrl';
 import styles from '@/styles/AdminDashboard.module.css';
 
 export default function AdminPembayaranPage() {
@@ -57,11 +58,10 @@ export default function AdminPembayaranPage() {
     if (!trx.dokumenValidasi) return null;
     
     if (trx.status === 'VERIFIKASI_DP' && trx.dokumenValidasi.buktiResiDP) {
-      return `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/uploads/${trx.dokumenValidasi.buktiResiDP}`;
+      return getImageUrl(trx.dokumenValidasi.buktiResiDP);
     }
-    
     if (trx.status === 'VERIFIKASI_SISA' && trx.dokumenValidasi.buktiResiSisa) {
-      return `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/uploads/${trx.dokumenValidasi.buktiResiSisa}`;
+      return getImageUrl(trx.dokumenValidasi.buktiResiSisa);
     }
     
     return null;

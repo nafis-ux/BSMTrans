@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import styles from '@/styles/Booking.module.css';
+import { getImageUrl } from '@/utils/getImageUrl';
 
 export default function BookingForm() {
   const router = useRouter();
@@ -223,7 +224,7 @@ export default function BookingForm() {
           <div className={styles.carPreview}>
             <span className={styles.carBadge}>PREMIUM CLASS</span>
             {carData.image ? (
-              <img src={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/uploads/${carData.image}`} alt={carData.namaMobil} className={styles.carImage} />
+              <img src={getImageUrl(carData.image)} alt={carData.namaMobil} className={styles.carImage} />
             ) : (
               <div style={{ backgroundColor: 'rgba(0,0,0,0.4)', height: '180px', borderRadius: '16px', marginBottom: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px', border: '1px solid rgba(255,255,255,0.05)' }}>
                  🚗 {carData.namaMobil}

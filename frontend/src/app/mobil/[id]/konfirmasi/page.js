@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
+import { getImageUrl } from '@/utils/getImageUrl';
 import Link from 'next/link';
 import styles from '@/styles/Konfirmasi.module.css';
 
@@ -160,7 +161,7 @@ export default function KonfirmasiPesananPage() {
           <span className={styles.carBadge}>PREMIUM CLASS</span>
           {carData?.image ? (
             <div style={{ width: '100%', height: '180px', borderRadius: '12px', overflow: 'hidden', marginBottom: '20px' }}>
-              <img src={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/uploads/${carData.image}`} alt={carData.namaMobil} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              <img src={getImageUrl(carData.image)} alt={carData.namaMobil} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
             </div>
           ) : (
             <div style={{ backgroundColor: '#121214', height: '140px', borderRadius: '12px', marginBottom: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px' }}>
