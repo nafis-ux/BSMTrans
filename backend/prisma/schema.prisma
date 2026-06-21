@@ -60,16 +60,6 @@ model RuteTravel {
   transaksiTravel Transaksi[]
 }
 
-model LayananDropOff {
-  id             String      @id
-  destinasi      String
-  tag            String      @default("FLEKSIBEL")
-  deskripsi      String?     @db.Text
-  harga          Int
-  estimasiWaktu  String?
-  image          String?
-  transaksiDrop  Transaksi[]
-}
 
 model Transaksi {
   id              String          @id
@@ -80,8 +70,6 @@ model Transaksi {
   mobil           Mobil?          @relation(fields: [mobilId], references: [id], onDelete: SetNull)
   ruteTravelId    String?
   ruteTravel      RuteTravel?     @relation(fields: [ruteTravelId], references: [id], onDelete: SetNull)
-  layananDropOffId String?
-  layananDropOff  LayananDropOff? @relation(fields: [layananDropOffId], references: [id], onDelete: SetNull)
   tanggalLayanan  DateTime        @db.Date
   durasi          Int             @default(1)
   alamatJemput    String?         @db.Text
@@ -97,7 +85,6 @@ model Transaksi {
 enum JenisLayanan {
   SEWA_MOBIL
   TRAVEL
-  DROP_OFF
 }
 
 enum StatusTransaksi {

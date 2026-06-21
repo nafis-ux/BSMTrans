@@ -69,8 +69,7 @@ export default function AdminLayout({ children }) {
     { label: 'Dashboard', icon: '📊', path: '/admin' },
     { label: 'Data Mobil', icon: '🚘', path: '/admin/mobil' },
     { label: 'Data Travel', icon: '🚌', path: '/admin/travel' },
-    { label: 'Layanan Drop Off', icon: '🛣️', path: '/admin/layanan-dropoff' },
-    { label: 'Trx. Drop Off', icon: '📍', path: '/admin/dropoff' },
+
     { label: 'Transaksi', icon: '📋', path: '/admin/transaksi' },
     { label: 'Pembayaran', icon: '💳', path: '/admin/pembayaran' },
   ];

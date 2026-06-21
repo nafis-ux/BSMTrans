@@ -9,7 +9,7 @@ export default function Home() {
   const [activeService, setActiveService] = useState('rental');
   const [featuredCars, setFeaturedCars] = useState([]);
   const [travelRoutes, setTravelRoutes] = useState([]);
-  const [dropOffServices, setDropOffServices] = useState([]);
+
 
   useEffect(() => {
     // Fetch Mobil
@@ -28,13 +28,7 @@ export default function Home() {
       })
       .catch(err => console.error("Gagal load travel:", err));
 
-    // Fetch Drop Off
-    fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/dropoff`)
-      .then(res => res.json())
-      .then(data => {
-        if (Array.isArray(data)) setDropOffServices(data.slice(0, 3));
-      })
-      .catch(err => console.error("Gagal load dropoff:", err));
+
   }, []);
 
   const formatRupiah = (num) => `Rp ${(num || 0).toLocaleString('id-ID')}`;
@@ -80,12 +74,7 @@ export default function Home() {
               >
                 Travel Antar Kota
               </button>
-              <button 
-                className={`${styles.tabBtn} ${activeService === 'dropoff' ? styles.tabBtnActive : ''}`}
-                onClick={() => setActiveService('dropoff')}
-              >
-                Drop Off Bandara
-              </button>
+
             </div>
 
             <div className={styles.searchForm}>
@@ -139,27 +128,7 @@ export default function Home() {
                 </>
               )}
 
-              {activeService === 'dropoff' && (
-                <>
-                  <div className={styles.inputGroup}>
-                    <label className={styles.inputLabel}>Titik Jemput</label>
-                    <input type="text" placeholder="Hotel / Alamat Rumah" className={styles.inputField} />
-                  </div>
-                  <div className={styles.inputGroup}>
-                    <label className={styles.inputLabel}>Destinasi (Bandara)</label>
-                    <select className={styles.inputField}>
-                      <option value="">Pilih Bandara...</option>
-                      <option value="cgk">Soekarno-Hatta (CGK)</option>
-                      <option value="hpl">Halim Perdanakusuma (HLP)</option>
-                      <option value="yia">Yogyakarta Intl (YIA)</option>
-                    </select>
-                  </div>
-                  <div className={styles.inputGroup}>
-                    <label className={styles.inputLabel}>Waktu Jemput</label>
-                    <input type="time" className={styles.inputField} />
-                  </div>
-                </>
-              )}
+
 
               <button className={styles.searchBtn}>
                 Cari Jadwal & Harga
@@ -302,61 +271,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ===== 4. DROP OFF SERVICES ===== */}
-      <section className={styles.fleetSection}>
-        <div className={styles.sectionHeader}>
-          <div className={styles.badge}>Private Transfer</div>
-          <h2 className={styles.sectionTitle}>Layanan Drop Off</h2>
-          <p className={styles.sectionSubtitle}>
-            Pengantaran sekali jalan (one-way) dengan armada eksklusif, privasi penuh dan tanpa ribet.
-          </p>
-        </div>
-
-        <div className={styles.fleetGrid}>
-          {dropOffServices.length === 0 ? (
-            <p style={{ color: '#8a8f98', textAlign: 'center', width: '100%' }}>Memuat layanan drop off...</p>
-          ) : (
-            dropOffServices.map(service => (
-              <div key={service.id} className={styles.fleetCard}>
-                <div className={styles.fleetInfo} style={{ padding: '24px' }}>
-                  <div className={styles.fleetHeader}>
-                    <h3 className={styles.fleetName}>{service.destinasi}</h3>
-                    <span className={styles.fleetType}>{service.tag || 'Drop Off'}</span>
-                  </div>
-
-                  <p style={{ color: '#a0a5b1', fontSize: '13px', margin: '12px 0', lineHeight: '1.6' }}>
-                    {service.deskripsi || 'Layanan pengantaran eksklusif BSMTrans.'}
-                  </p>
-
-                  <div className={styles.fleetSpecs}>
-                    <div className={styles.specItem}>
-                      <span className={styles.specIcon}>⏱️</span>
-                      <span>{service.estimasiWaktu || 'Fleksibel'}</span>
-                    </div>
-                    <div className={styles.specItem}>
-                      <span className={styles.specIcon}>💰</span>
-                      <span>{service.harga > 0 ? formatRupiah(service.harga) : 'Hubungi Admin'}</span>
-                    </div>
-                  </div>
-
-                  <button 
-                    className={styles.fleetBtn} 
-                    onClick={() => handlePesanClick(service.id === 'custom-drop' ? '/dropoff/custom' : `/dropoff/${service.id}`)}
-                  >
-                    {service.id === 'custom-drop' ? 'Custom Drop Off' : 'Pesan Drop Off'}
-                  </button>
-                </div>
-              </div>
-            ))
-          )}
-        </div>
-
-        <div style={{ textAlign: 'center', marginTop: '40px' }}>
-          <Link href="/dropoff" className={styles.btnOutline}>
-            Lihat Semua Layanan Drop Off &rarr;
-          </Link>
-        </div>
-      </section>
 
       {/* Ruang kosong sementara untuk menahan layar agar tidak mentok di bawah */}
       <div style={{ height: '10vh' }}></div>

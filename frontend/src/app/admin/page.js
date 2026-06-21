@@ -39,7 +39,7 @@ export default function AdminDashboardPage() {
   const getLayananLabel = (trx) => {
     if (trx.jenisLayanan === 'SEWA_MOBIL' && trx.mobil) return `Sewa ${trx.mobil.namaMobil}`;
     if (trx.jenisLayanan === 'TRAVEL' && trx.ruteTravel) return `Travel ${trx.ruteTravel.asal} - ${trx.ruteTravel.tujuan}`;
-    if (trx.jenisLayanan === 'DROP_OFF') return `Drop Off Bandara`;
+
     return trx.jenisLayanan || '-';
   };
 

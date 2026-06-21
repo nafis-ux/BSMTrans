@@ -65,11 +65,7 @@ export default function TransaksiPage() {
     if (trx.jenisLayanan === 'TRAVEL' && trx.ruteTravel) {
       return `Travel ${trx.ruteTravel.asal} ➔ ${trx.ruteTravel.tujuan}`;
     }
-    if (trx.jenisLayanan === 'DROP_OFF') {
-      const dest = trx.detailManifest?.destinasi || 'Drop Off';
-      return `Drop Off ➔ ${dest}`;
-    }
-    // Fallback jika ada jenis layanan lain seperti TRAVEL atau DROP_OFF
+    // Fallback jika ada jenis layanan lain
     return trx.jenisLayanan || 'Layanan Transportasi';
   };
 

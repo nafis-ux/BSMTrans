@@ -13,12 +13,12 @@ export default function Navbar() {
     { name: 'Home', path: '/' },
     { name: 'Sewa Mobil', path: '/mobil' },
     { name: 'Travel', path: '/travel' },
-    { name: 'Drop Off', path: '/dropoff' },
+
     { name: 'Transaksi', path: '/transaksi' },
   ];
 
   // Halaman yang memerlukan login
-  const protectedPaths = ['/mobil', '/travel', '/dropoff', '/transaksi', '/profil'];
+  const protectedPaths = ['/mobil', '/travel', '/transaksi', '/profil'];
 
   const handleNavClick = (e, path) => {
     setIsMenuOpen(false); // Close menu on click

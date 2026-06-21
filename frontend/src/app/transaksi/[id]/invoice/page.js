@@ -64,9 +64,6 @@ export default function HalamanInvoiceCetak({ params }) {
     const tujuan = transaction.ruteTravel?.tujuan || "";
     const kursi = transaction.detailManifest?.nomorKursi || "-";
     deskripsi = `Tiket Travel Eksekutif (${asal} ➔ ${tujuan}) [Kursi: ${kursi}]`;
-  } else if (transaction?.jenisLayanan === 'DROP_OFF') {
-    const dest = transaction.detailManifest?.destinasi || "";
-    deskripsi = `Layanan Drop Off Eksklusif ke ${dest}`;
   }
 
   const customerName = transaction?.detailManifest?.namaPelanggan || 

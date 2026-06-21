@@ -67,51 +67,7 @@ const createTransaksi = async (req, res) => {
         transaksiId: transaksiBaru.id
       });
 
-    } else if (jenisLayanan === "DROP_OFF") {
-      const { layananDropOffId, namaLengkap, alamatJemput, tanggalJemput, jamJemput, catatan } = req.body;
 
-      if (!layananDropOffId || !namaLengkap || !alamatJemput || !tanggalJemput || !jamJemput) {
-        return res.status(400).json({ error: "Data booking drop off tidak lengkap!" });
-      }
-
-      const dropOffService = await prisma.layananDropOff.findUnique({
-        where: { id: layananDropOffId }
-      });
-
-      if (!dropOffService) {
-        return res.status(404).json({ error: "Layanan Drop Off tidak ditemukan di database!" });
-      }
-
-      const grandTotalHarga = parseInt(dropOffService.harga);
-
-      const transaksiBaru = await prisma.transaksi.create({
-        data: {
-          id: `TRX-${Date.now()}`,
-          userId: userId,
-          jenisLayanan: "DROP_OFF",
-          layananDropOffId: layananDropOffId,
-          tanggalLayanan: new Date(tanggalJemput),
-          durasi: 1,
-          alamatJemput: alamatJemput,
-          totalHarga: grandTotalHarga,
-          sisaTagihan: grandTotalHarga,
-          status: "PENDING",
-          detailManifest: {
-            namaLengkap: namaLengkap,
-            destinasi: layananDropOffId === 'custom-drop' && req.body.destinasi ? req.body.destinasi : dropOffService.destinasi,
-            jamJemput: jamJemput,
-            catatan: catatan || '',
-            nomorWhatsapp: user.noHandphone || user.whatsapp || '-'
-          }
-        }
-      });
-
-      return res.status(201).json({
-        message: "Transaksi drop off berhasil dibuat",
-        transaksiId: transaksiBaru.id
-      });
-
-    } else {
       // Default ke SEWA_MOBIL
       const { carId, rentalDate, duration, driverService } = req.body;
 

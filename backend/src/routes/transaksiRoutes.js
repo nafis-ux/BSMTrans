@@ -35,7 +35,7 @@ const {
 // Ambil token dulu -> bongkar FormData -> jalankan fungsi buat transaksi
 router.post('/sewa-mobil', verifyToken, upload.single('fotoKTP'), createTransaksi);
 
-// Rute umum untuk TRAVEL & DROP_OFF (tanpa upload KTP di awal, berupa JSON)
+// Rute umum untuk TRAVEL (tanpa upload KTP di awal, berupa JSON)
 router.post('/', verifyToken, createTransaksi);
 
 // Rute untuk mengunggah bukti DP
