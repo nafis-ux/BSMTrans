@@ -12,6 +12,9 @@ export default function Home() {
   const [activeService, setActiveService] = useState('rental');
   const [featuredCars, setFeaturedCars] = useState([]);
   const [travelRoutes, setTravelRoutes] = useState([]);
+  const [carTypes, setCarTypes] = useState([]);
+  const [travelOrigins, setTravelOrigins] = useState([]);
+  const [travelDestinations, setTravelDestinations] = useState([]);
   const { toasts, showToast, removeToast } = useToast();
 
 
@@ -20,7 +23,11 @@ export default function Home() {
     fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/mobil`)
       .then(res => res.json())
       .then(data => {
-        if (Array.isArray(data)) setFeaturedCars(data.slice(0, 3));
+        if (Array.isArray(data)) {
+          setFeaturedCars(data.slice(0, 3));
+          const types = [...new Set(data.map(car => car.tipe).filter(Boolean))];
+          setCarTypes(types);
+        }
       })
       .catch(err => console.error("Gagal load armada:", err));
 
@@ -28,7 +35,13 @@ export default function Home() {
     fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/travel`)
       .then(res => res.json())
       .then(data => {
-        if (Array.isArray(data)) setTravelRoutes(data.slice(0, 3));
+        if (Array.isArray(data)) {
+          setTravelRoutes(data.slice(0, 3));
+          const origins = [...new Set(data.map(route => route.asal).filter(Boolean))];
+          const destinations = [...new Set(data.map(route => route.tujuan).filter(Boolean))];
+          setTravelOrigins(origins);
+          setTravelDestinations(destinations);
+        }
       })
       .catch(err => console.error("Gagal load travel:", err));
 
@@ -89,9 +102,9 @@ export default function Home() {
                     <label className={styles.inputLabel}>Tipe Armada</label>
                     <select className={styles.inputField}>
                       <option value="">Semua Tipe</option>
-                      <option value="premium">Premium SUV</option>
-                      <option value="luxury">Luxury MPV</option>
-                      <option value="sedan">Executive Sedan</option>
+                      {carTypes.map((tipe, idx) => (
+                        <option key={idx} value={tipe}>{tipe}</option>
+                      ))}
                     </select>
                   </div>
                   <div className={styles.inputGroup}>
@@ -114,16 +127,18 @@ export default function Home() {
                     <label className={styles.inputLabel}>Kota Asal</label>
                     <select className={styles.inputField}>
                       <option value="">Pilih Asal...</option>
-                      <option value="jakarta">Jakarta</option>
-                      <option value="bandung">Bandung</option>
+                      {travelOrigins.map((asal, idx) => (
+                        <option key={idx} value={asal}>{asal}</option>
+                      ))}
                     </select>
                   </div>
                   <div className={styles.inputGroup}>
                     <label className={styles.inputLabel}>Kota Tujuan</label>
                     <select className={styles.inputField}>
                       <option value="">Pilih Tujuan...</option>
-                      <option value="bandung">Bandung</option>
-                      <option value="jakarta">Jakarta</option>
+                      {travelDestinations.map((tujuan, idx) => (
+                        <option key={idx} value={tujuan}>{tujuan}</option>
+                      ))}
                     </select>
                   </div>
                   <div className={styles.inputGroup}>
