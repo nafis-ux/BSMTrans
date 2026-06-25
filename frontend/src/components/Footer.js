@@ -6,8 +6,8 @@ import styles from '@/styles/Footer.module.css';
 export default function Footer() {
   const pathname = usePathname();
 
-  // Sembunyikan Footer di halaman admin
-  if (pathname.startsWith('/admin')) {
+  // Tampilkan Footer hanya di halaman utama (home)
+  if (pathname !== '/') {
     return null;
   }
 
