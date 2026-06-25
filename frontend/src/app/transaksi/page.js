@@ -97,7 +97,7 @@ export default function TransaksiPage() {
 
   // Fungsi untuk buka WhatsApp admin
   const handleWhatsApp = (trx) => {
-    const phone = '083167785934'; // Nomor WhatsApp admin BSMTrans
+    const phone = '6283167785934'; // Nomor WhatsApp admin BSMTrans
     const layanan = renderNamaLayanan(trx);
     const message = encodeURIComponent(
       `Halo Admin BSMTrans 👋\n\nSaya ingin menanyakan transaksi saya:\n📋 ID: #${trx.id}\n🚗 Layanan: ${layanan}\n💰 Total: Rp ${trx.totalHarga?.toLocaleString('id-ID')}\n📌 Status: ${formatStatusText(trx.status)}\n\nMohon informasinya, terima kasih! 🙏`
