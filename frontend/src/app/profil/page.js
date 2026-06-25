@@ -3,12 +3,15 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import styles from '@/styles/Profil.module.css';
+import Toast from '@/components/Toast';
+import useToast from '@/utils/useToast';
 
 export default function ProfilPage() {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState('akun');
   const [loading, setLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const { toasts, showToast, removeToast } = useToast();
 
   // State profil dinamis hasil sinkronisasi database MySQL
   const [profileData, setProfileData] = useState({
@@ -67,7 +70,7 @@ const formatTanggalAman = (tanggal) => {
         setTrips(Array.isArray(data.trips) ? data.trips : []);
       } catch (error) {
         console.error(error);
-        alert(error.message);
+        showToast(error.message, 'error');
       } finally {
         setLoading(false);
       }
@@ -102,9 +105,9 @@ const formatTanggalAman = (tanggal) => {
       const data = await response.json();
       if (!response.ok) throw new Error(data.error);
 
-      alert(data.message || "Profil berhasil diperbarui di database! 💾");
+      showToast(data.message || "Profil berhasil diperbarui di database! 💾", "success");
     } catch (error) {
-      alert(`Gagal menyimpan: ${error.message}`);
+      showToast(`Gagal menyimpan: ${error.message}`, "error");
     }
   };
 
@@ -112,13 +115,14 @@ const formatTanggalAman = (tanggal) => {
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
-    alert("Anda telah berhasil keluar akun.");
-    router.push('/login');
+    window.dispatchEvent(new Event('authChange'));
+    showToast("Anda telah berhasil keluar akun.", "success");
+    setTimeout(() => router.push('/login'), 800);
   };
 
   const handleSavePassword = (e) => {
     e.preventDefault();
-    alert("Fitur ganti kata sandi siap dihubungkan!");
+    showToast("Fitur ganti kata sandi siap dihubungkan!", "warning");
   };
 
   if (!isAuthenticated || loading) {
@@ -129,6 +133,7 @@ const formatTanggalAman = (tanggal) => {
 
   return (
     <div className={styles.container}>
+      <Toast toasts={toasts} removeToast={removeToast} />
       <div className={styles.profileGrid}>
         
         {/* SIDEBAR KIRI */}
@@ -228,9 +233,9 @@ const formatTanggalAman = (tanggal) => {
                         {trip.status === 'Menunggu' ? (
                           <Link href={`/transaksi/${trip.id}`} className={styles.btnTripPay}>Bayar Sekarang →</Link>
                         ) : trip.status === 'Aktif' ? (
-                          <button className={styles.btnTripInfo} onClick={() => alert(`Tiket digital dikirim ke WhatsApp ${profileData.noHandphone}`)}>Kirim E-Tiket ke WA</button>
+                          <button className={styles.btnTripInfo} onClick={() => showToast(`Tiket digital dikirim ke WhatsApp ${profileData.noHandphone}`, 'success')}>Kirim E-Tiket ke WA</button>
                         ) : (
-                          <button className={styles.btnTripRepeat} onClick={() => alert("Mengarahkan kembali ke rute pemesanan...")}>Pesan Lagi</button>
+                          <button className={styles.btnTripRepeat} onClick={() => { showToast("Mengarahkan kembali ke rute pemesanan...", "success"); router.push('/mobil'); }}>Pesan Lagi</button>
                         )}
                       </div>
                     </div>

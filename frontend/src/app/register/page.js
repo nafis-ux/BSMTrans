@@ -4,10 +4,13 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 import styles from '@/styles/Register.module.css';
+import Toast from '@/components/Toast';
+import useToast from '@/utils/useToast';
 
 export default function RegisterPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const { toasts, showToast, removeToast } = useToast();
   
   const [formData, setFormData] = useState({
     namaLengkap: '',
@@ -28,12 +31,12 @@ export default function RegisterPage() {
     e.preventDefault();
 
     if (!formData.namaLengkap || !formData.noHandphone || !formData.email || !formData.password) {
-      alert("Mohon lengkapi seluruh kolom data registrasi!");
+      showToast("Mohon lengkapi seluruh kolom data registrasi!", "warning");
       return;
     }
 
     if (formData.password !== formData.confirmPassword) {
-      alert("Peringatan: Konfirmasi kata sandi tidak cocok!");
+      showToast("Peringatan: Konfirmasi kata sandi tidak cocok!", "warning");
       return;
     }
 
@@ -57,12 +60,12 @@ export default function RegisterPage() {
         throw new Error(data.error || 'Terjadi kesalahan saat registrasi.');
       }
 
-      alert("Registrasi Berhasil! Silakan masuk menggunakan akun baru Anda.");
-      router.push('/login');
+      showToast("Registrasi Berhasil! Silakan masuk menggunakan akun baru Anda.", "success");
+      setTimeout(() => router.push('/login'), 1000);
 
     } catch (error) {
       console.error("Registration Manual Error:", error);
-      alert(`Gagal Mendaftar: ${error.message}`);
+      showToast(`Gagal Mendaftar: ${error.message}`, "error");
     } finally {
       setLoading(false);
     }
@@ -82,12 +85,13 @@ export default function RegisterPage() {
 
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data.user));
+      window.dispatchEvent(new Event('authChange'));
 
-      alert(`Registrasi & Login Instan Berhasil! Selamat datang, ${data.user.nama}! ✨`);
-      router.push('/mobil');
+      showToast(`Registrasi & Login Instan Berhasil! Selamat datang, ${data.user.nama}! ✨`, "success");
+      setTimeout(() => router.push('/mobil'), 800);
     } catch (error) {
       console.error("Google Register Error:", error);
-      alert(`Gagal mendaftar lewat Google: ${error.message}`);
+      showToast(`Gagal mendaftar lewat Google: ${error.message}`, "error");
     } finally {
       setLoading(false);
     }
@@ -95,6 +99,7 @@ export default function RegisterPage() {
 
   return (
     <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+      <Toast toasts={toasts} removeToast={removeToast} />
       <div className={styles.container}>
         <div className={styles.registerCard}>
           
@@ -136,7 +141,7 @@ export default function RegisterPage() {
             </button>
           </form>
 
-          {/* SEPARATOR & TOMBOL GOOGLE PINDAH KE BAWAH SINI */}
+          {/* SEPARATOR & TOMBOL GOOGLE */}
           <div style={{ textTransform: 'uppercase', textAlign: 'center', fontSize: '12px', color: '#999', margin: '25px 0 15px 0' }}>
             — Atau daftar instan dengan —
           </div>
@@ -144,7 +149,7 @@ export default function RegisterPage() {
           <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '10px' }}>
             <GoogleLogin
               onSuccess={handleGoogleSuccess}
-              onError={() => alert('Registrasi Google Gagal. Silakan coba lagi.')}
+              onError={() => showToast('Registrasi Google Gagal. Silakan coba lagi.', 'error')}
               useOneTap
               theme="filled_blue"
               text="signup_with"

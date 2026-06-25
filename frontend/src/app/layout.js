@@ -1,5 +1,6 @@
 import '@/styles/globals.css';
 import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 
 export const metadata = {
   title: 'BSMTrans - Solusi Transportasi Mudah & Cepat',
@@ -14,7 +15,7 @@ export default function RootLayout({ children }) {
         <main style={{ minHeight: '80vh' }}>
           {children}
         </main>
-        {/* Footer bisa ditambahkan di sini nanti */}
+        <Footer />
       </body>
     </html>
   );

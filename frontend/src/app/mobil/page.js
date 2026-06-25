@@ -3,11 +3,14 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { getImageUrl } from '@/utils/getImageUrl';
 import styles from '@/styles/Mobil.module.css';
+import Toast from '@/components/Toast';
+import useToast from '@/utils/useToast';
 
 export default function SewaMobilPage() {
   const router = useRouter();
   const [carList, setCarList] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { toasts, showToast, removeToast } = useToast();
 
   useEffect(() => {
     fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/mobil`)
@@ -24,7 +27,7 @@ export default function SewaMobilPage() {
   const handlePesanClick = (carId) => {
     const token = localStorage.getItem('token');
     if (!token) {
-      alert("Silakan login terlebih dahulu untuk melakukan pemesanan.");
+      showToast("Silakan login terlebih dahulu untuk melakukan pemesanan.", "warning");
       router.push('/login');
       return;
     }
@@ -33,6 +36,7 @@ export default function SewaMobilPage() {
 
   return (
     <main className={styles.main}>
+      <Toast toasts={toasts} removeToast={removeToast} />
       {/* 1. HERO SECTION */}
       <section className={styles.heroSection}>
         <div className={styles.heroContent}>
@@ -122,7 +126,6 @@ export default function SewaMobilPage() {
         )}
       </section>
 
-      <div style={{ height: '10vh' }}></div>
     </main>
   );
 }

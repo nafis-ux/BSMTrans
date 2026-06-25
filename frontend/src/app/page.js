@@ -4,12 +4,15 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { getImageUrl } from '@/utils/getImageUrl';
 import styles from '../styles/Home.module.css';
+import Toast from '@/components/Toast';
+import useToast from '@/utils/useToast';
 
 export default function Home() {
   const router = useRouter();
   const [activeService, setActiveService] = useState('rental');
   const [featuredCars, setFeaturedCars] = useState([]);
   const [travelRoutes, setTravelRoutes] = useState([]);
+  const { toasts, showToast, removeToast } = useToast();
 
 
   useEffect(() => {
@@ -38,7 +41,7 @@ export default function Home() {
   const handlePesanClick = (targetPath) => {
     const token = localStorage.getItem('token');
     if (!token) {
-      alert("Silakan login atau daftar terlebih dahulu untuk melakukan pemesanan.");
+      showToast("Silakan login atau daftar terlebih dahulu untuk melakukan pemesanan.", "warning");
       router.push('/login');
       return;
     }
@@ -47,6 +50,7 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
+      <Toast toasts={toasts} removeToast={removeToast} />
       {/* 1. HERO SECTION */}
       <section className={styles.heroSection}>
         <div className={styles.heroContent}>
@@ -272,9 +276,6 @@ export default function Home() {
         </div>
       </section>
 
-
-      {/* Ruang kosong sementara untuk menahan layar agar tidak mentok di bawah */}
-      <div style={{ height: '10vh' }}></div>
     </main>
   );
 }

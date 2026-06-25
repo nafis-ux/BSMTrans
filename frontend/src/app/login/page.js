@@ -4,11 +4,14 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 import styles from '@/styles/Login.module.css';
+import Toast from '@/components/Toast';
+import useToast from '@/utils/useToast';
 
 export default function LoginPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({ email: '', password: '' });
+  const { toasts, showToast, removeToast } = useToast();
 
   const GOOGLE_CLIENT_ID = "625752287493-f7acr6o40che5ob7n4opgt2jvt0m6h0c.apps.googleusercontent.com";
 
@@ -19,7 +22,10 @@ export default function LoginPage() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    if (!formData.email || !formData.password) return alert("Mohon isi semua kolom!");
+    if (!formData.email || !formData.password) {
+      showToast("Mohon isi semua kolom!", "warning");
+      return;
+    }
     setLoading(true);
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/auth/login`, {
@@ -32,16 +38,20 @@ export default function LoginPage() {
 
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data.user));
-      alert(`Selamat datang kembali, ${data.user.nama}! 👋`);
+      window.dispatchEvent(new Event('authChange'));
+
+      showToast(`Selamat datang kembali, ${data.user.nama}! 👋`, "success");
       
       // Redirect berdasarkan role
-      if (data.user.role === 'ADMIN') {
-        router.push('/admin');
-      } else {
-        router.push('/mobil');
-      }
+      setTimeout(() => {
+        if (data.user.role === 'ADMIN') {
+          router.push('/admin');
+        } else {
+          router.push('/mobil');
+        }
+      }, 800);
     } catch (error) {
-      alert(`Gagal Masuk: ${error.message}`);
+      showToast(`Gagal Masuk: ${error.message}`, "error");
     } finally { setLoading(false); }
   };
 
@@ -59,23 +69,27 @@ export default function LoginPage() {
 
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data.user));
+      window.dispatchEvent(new Event('authChange'));
 
-      alert(`Login Instan Sukses! Selamat datang, ${data.user.nama}! ✨`);
+      showToast(`Login Instan Sukses! Selamat datang, ${data.user.nama}! ✨`, "success");
       
       // Redirect berdasarkan role
-      if (data.user.role === 'ADMIN') {
-        router.push('/admin');
-      } else {
-        router.push('/mobil');
-      }
+      setTimeout(() => {
+        if (data.user.role === 'ADMIN') {
+          router.push('/admin');
+        } else {
+          router.push('/mobil');
+        }
+      }, 800);
     } catch (error) {
       console.error(error);
-      alert(`Gagal login Google: ${error.message}`);
+      showToast(`Gagal login Google: ${error.message}`, "error");
     } finally { setLoading(false); }
   };
 
   return (
     <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+      <Toast toasts={toasts} removeToast={removeToast} />
       <div className={styles.container}>
         <div className={styles.loginCard}>
           <div className={styles.header}>
@@ -106,7 +120,7 @@ export default function LoginPage() {
           <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '10px' }}>
             <GoogleLogin
               onSuccess={handleGoogleSuccess}
-              onError={() => alert('Login Google Gagal. Silakan coba lagi.')}
+              onError={() => showToast('Login Google Gagal. Silakan coba lagi.', 'error')}
               useOneTap
               theme="filled_blue"
               shape="pill"
