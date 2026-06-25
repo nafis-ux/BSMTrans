@@ -251,10 +251,69 @@ const uploadBuktiSisa = async (req, res) => {
   }
 };
 
+const cancelTransaksi = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const userId = req.userId;
+
+    const transaksi = await prisma.transaksi.findUnique({
+      where: { id: id }
+    });
+
+    if (!transaksi) {
+      return res.status(404).json({ error: "Transaksi tidak ditemukan!" });
+    }
+
+    // Pastikan transaksi milik user yang sedang login
+    if (transaksi.userId !== userId) {
+      return res.status(403).json({ error: "Anda tidak memiliki akses untuk membatalkan transaksi ini." });
+    }
+
+    // Hanya bisa dibatalkan jika status PENDING atau DP_DIBAYAR
+    const cancellableStatuses = ['PENDING', 'VERIFIKASI_DP', 'DP_DIBAYAR'];
+    if (!cancellableStatuses.includes(transaksi.status)) {
+      return res.status(400).json({ error: `Transaksi dengan status "${transaksi.status}" tidak dapat dibatalkan.` });
+    }
+
+    // Update status menjadi BATAL
+    await prisma.transaksi.update({
+      where: { id: id },
+      data: { status: "BATAL" }
+    });
+
+    // Jika sewa mobil, kembalikan ketersediaan mobil
+    if (transaksi.jenisLayanan === 'SEWA_MOBIL' && transaksi.mobilId) {
+      await prisma.mobil.update({
+        where: { id: transaksi.mobilId },
+        data: { statusTersedia: true }
+      });
+    }
+
+    // Jika travel, kembalikan kursi yang telah dipesan
+    if (transaksi.jenisLayanan === 'TRAVEL' && transaksi.ruteTravelId) {
+      const manifest = transaksi.detailManifest;
+      let jumlahKursi = 1;
+      if (manifest && typeof manifest === 'object' && manifest.nomorKursi) {
+        jumlahKursi = manifest.nomorKursi.split(',').filter(k => k.trim().length > 0).length;
+      }
+      await prisma.ruteTravel.update({
+        where: { id: transaksi.ruteTravelId },
+        data: { sisaKursi: { increment: jumlahKursi } }
+      });
+    }
+
+    res.status(200).json({ message: "Transaksi berhasil dibatalkan." });
+  } catch (error) {
+    console.error("Cancel Transaksi Error:", error);
+    res.status(500).json({ error: "Gagal membatalkan transaksi: " + error.message });
+  }
+};
+
 module.exports = { 
   createTransaksi, 
   getTransaksiById, 
   getTransaksiByUserId,
   uploadBuktiDP,
-  uploadBuktiSisa
-};
+  uploadBuktiSisa,
+  cancelTransaksi
+};

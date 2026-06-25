@@ -143,6 +143,72 @@
   border-color: var(--color-text-muted);
 }
 
+/* --- Tombol WhatsApp --- */
+.btnWhatsApp {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: none;
+  background: rgba(37, 211, 102, 0.12);
+  color: #25d366;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.btnWhatsApp:hover {
+  background: rgba(37, 211, 102, 0.25);
+  transform: scale(1.08);
+}
+
+/* --- Tombol Batalkan --- */
+.btnCancel {
+  padding: 8px 16px;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 6px;
+  border: 1px solid rgba(224, 69, 69, 0.3);
+  background: rgba(224, 69, 69, 0.08);
+  color: #e04545;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.btnCancel:hover {
+  background: rgba(224, 69, 69, 0.18);
+  border-color: rgba(224, 69, 69, 0.5);
+}
+
+.btnCancel:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* --- Status BATAL --- */
+.statusBatal {
+  background-color: rgba(224, 69, 69, 0.1);
+  color: #e04545;
+  border: 1px solid rgba(224, 69, 69, 0.3);
+}
+
+/* --- Status VERIFIKASI --- */
+.statusVerifikasi {
+  background-color: rgba(77, 166, 255, 0.1);
+  color: #4da6ff;
+  border: 1px solid rgba(77, 166, 255, 0.3);
+}
+
+/* --- Label Dibatalkan --- */
+.cancelledText {
+  color: var(--color-text-muted);
+  font-size: 12px;
+  font-style: italic;
+}
+
 @media (max-width: 480px) {
   .title {
     font-size: 28px;
@@ -152,5 +218,9 @@
   }
   .serviceTitle {
     font-size: 14px;
+  }
+  .actions {
+    flex-wrap: wrap;
+    gap: 8px;
   }
 }

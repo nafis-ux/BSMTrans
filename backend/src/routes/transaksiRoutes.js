@@ -15,7 +15,8 @@ const {
   getTransaksiById, 
   getTransaksiByUserId,
   uploadBuktiDP,
-  uploadBuktiSisa
+  uploadBuktiSisa,
+  cancelTransaksi
 } = require('../controllers/transaksiController');
 
 // Ambil token dulu -> bongkar FormData -> jalankan fungsi buat transaksi
@@ -35,5 +36,8 @@ router.get('/user', verifyToken, getTransaksiByUserId);
 
 // Ambil detail transaksi berdasarkan ID
 router.get('/:id', verifyToken, getTransaksiById);
+
+// Batalkan transaksi oleh user
+router.put('/:id/cancel', verifyToken, cancelTransaksi);
 
 module.exports = router;
