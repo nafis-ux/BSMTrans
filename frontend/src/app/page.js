@@ -107,31 +107,11 @@ export default function Home() {
                       ))}
                     </select>
                   </div>
-                  <div className={styles.inputGroup}>
-                    <label className={styles.inputLabel}>Tanggal Sewa</label>
-                    <input type="date" className={styles.inputField} />
-                  </div>
-                  <div className={styles.inputGroup}>
-                    <label className={styles.inputLabel}>Layanan Tambahan</label>
-                    <select className={styles.inputField}>
-                      <option value="lepas_kunci">Lepas Kunci</option>
-                      <option value="dengan_driver">Dengan Driver</option>
-                    </select>
-                  </div>
                 </>
               )}
 
               {activeService === 'travel' && (
                 <>
-                  <div className={styles.inputGroup}>
-                    <label className={styles.inputLabel}>Kota Asal</label>
-                    <select className={styles.inputField}>
-                      <option value="">Pilih Asal...</option>
-                      {travelOrigins.map((asal, idx) => (
-                        <option key={idx} value={asal}>{asal}</option>
-                      ))}
-                    </select>
-                  </div>
                   <div className={styles.inputGroup}>
                     <label className={styles.inputLabel}>Kota Tujuan</label>
                     <select className={styles.inputField}>
@@ -140,10 +120,6 @@ export default function Home() {
                         <option key={idx} value={tujuan}>{tujuan}</option>
                       ))}
                     </select>
-                  </div>
-                  <div className={styles.inputGroup}>
-                    <label className={styles.inputLabel}>Tanggal Keberangkatan</label>
-                    <input type="date" className={styles.inputField} />
                   </div>
                 </>
               )}

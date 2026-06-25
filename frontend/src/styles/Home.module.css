@@ -169,6 +169,11 @@
   transition: border-color 0.3s ease;
 }
 
+.inputField option {
+  color: #0a0a0c;
+  background-color: #ffffff;
+}
+
 .inputField:focus {
   border-color: var(--accent-color, #dfb143);
 }
