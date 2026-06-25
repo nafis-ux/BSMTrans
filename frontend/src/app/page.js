@@ -15,6 +15,11 @@ export default function Home() {
   const [carTypes, setCarTypes] = useState([]);
   const [travelOrigins, setTravelOrigins] = useState([]);
   const [travelDestinations, setTravelDestinations] = useState([]);
+  
+  // State untuk pilihan search
+  const [selectedCarType, setSelectedCarType] = useState('');
+  const [selectedTravelDestination, setSelectedTravelDestination] = useState('');
+  
   const { toasts, showToast, removeToast } = useToast();
 
 
@@ -61,6 +66,22 @@ export default function Home() {
     router.push(targetPath);
   };
 
+  const handleSearch = () => {
+    if (activeService === 'rental') {
+      if (selectedCarType) {
+        router.push(`/mobil?tipe=${encodeURIComponent(selectedCarType)}`);
+      } else {
+        router.push('/mobil');
+      }
+    } else {
+      if (selectedTravelDestination) {
+        router.push(`/travel?tujuan=${encodeURIComponent(selectedTravelDestination)}`);
+      } else {
+        router.push('/travel');
+      }
+    }
+  };
+
   return (
     <main className={styles.main}>
       <Toast toasts={toasts} removeToast={removeToast} />
@@ -100,7 +121,11 @@ export default function Home() {
                 <>
                   <div className={styles.inputGroup}>
                     <label className={styles.inputLabel}>Tipe Armada</label>
-                    <select className={styles.inputField}>
+                    <select 
+                      className={styles.inputField}
+                      value={selectedCarType}
+                      onChange={(e) => setSelectedCarType(e.target.value)}
+                    >
                       <option value="">Semua Tipe</option>
                       {carTypes.map((tipe, idx) => (
                         <option key={idx} value={tipe}>{tipe}</option>
@@ -114,7 +139,11 @@ export default function Home() {
                 <>
                   <div className={styles.inputGroup}>
                     <label className={styles.inputLabel}>Kota Tujuan</label>
-                    <select className={styles.inputField}>
+                    <select 
+                      className={styles.inputField}
+                      value={selectedTravelDestination}
+                      onChange={(e) => setSelectedTravelDestination(e.target.value)}
+                    >
                       <option value="">Pilih Tujuan...</option>
                       {travelDestinations.map((tujuan, idx) => (
                         <option key={idx} value={tujuan}>{tujuan}</option>
@@ -126,8 +155,8 @@ export default function Home() {
 
 
 
-              <button className={styles.searchBtn}>
-                Cari Jadwal & Harga
+              <button className={styles.searchBtn} onClick={handleSearch}>
+                {activeService === 'rental' ? 'Cari Mobil' : 'Cari Travel'}
               </button>
             </div>
           </div>

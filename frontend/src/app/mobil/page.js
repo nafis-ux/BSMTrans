@@ -13,11 +13,18 @@ export default function SewaMobilPage() {
   const { toasts, showToast, removeToast } = useToast();
 
   useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchTipe = urlParams.get('tipe');
+
     fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/mobil`)
       .then((res) => res.json())
       .then((data) => {
         if (Array.isArray(data)) {
-          setCarList(data);
+          if (searchTipe) {
+            setCarList(data.filter(car => car.tipe === searchTipe));
+          } else {
+            setCarList(data);
+          }
         }
       })
       .catch((err) => console.error("Error fetching data:", err))

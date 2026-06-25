@@ -14,9 +14,21 @@ export default function TravelPage() {
   useEffect(() => {
     const fetchRoutes = async () => {
       try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const searchTujuan = urlParams.get('tujuan');
+
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/travel`);
         const data = await response.json();
-        setRoutes(Array.isArray(data) ? data : []);
+        
+        if (Array.isArray(data)) {
+          if (searchTujuan) {
+            setRoutes(data.filter(route => route.tujuan === searchTujuan));
+          } else {
+            setRoutes(data);
+          }
+        } else {
+          setRoutes([]);
+        }
       } catch (error) {
         console.error("Gagal memuat rute travel:", error);
         setRoutes([]);
