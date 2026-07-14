@@ -1,4 +1,5 @@
 const prisma = require('../config/database');
+const { uploadToCloudinary } = require('../config/cloudinary');
 
 // 1. DASHBOARD STATISTIK ADMIN
 const getDashboardStats = async (req, res) => {
@@ -150,13 +151,16 @@ const updateStatusTransaksi = async (req, res) => {
 const updateMobil = async (req, res) => {
   try {
     const { id } = req.params;
-    const { namaMobil, tipe, hargaPerHari, biayaDriver, statusTersedia, kursi, bagasi, transmisi, fiturLain, image } = req.body;
+    const body = req.body || {};
+    const { namaMobil, tipe, hargaPerHari, biayaDriver, statusTersedia, kursi, bagasi, transmisi, fiturLain, image } = body;
 
-    // Prioritaskan URL dari file upload Cloudinary, fallback ke body.image
-    const imageUrl = req.file ? req.file.path : image;
-    console.log('[updateMobil] req.file:', req.file ? { path: req.file.path } : 'NO FILE');
-    console.log('[updateMobil] body.image:', image);
-    console.log('[updateMobil] final imageUrl:', imageUrl);
+    // Upload file ke Cloudinary jika ada, fallback ke body.image
+    let imageUrl = image;
+    if (req.file) {
+      const result = await uploadToCloudinary(req.file.buffer);
+      imageUrl = result.secure_url;
+      console.log('[updateMobil] Uploaded to Cloudinary:', imageUrl);
+    }
 
     const mobil = await prisma.mobil.update({
       where: { id },
@@ -185,18 +189,16 @@ const updateMobil = async (req, res) => {
 const updateMobilImage = async (req, res) => {
   try {
     const { id } = req.params;
-    console.log('[updateMobilImage] ID:', id);
-    console.log('[updateMobilImage] req.file:', req.file ? { path: req.file.path, filename: req.file.filename } : 'NO FILE');
     if (!req.file) return res.status(400).json({ error: "Tidak ada file yang diunggah" });
 
-    const imageUrl = req.file.path;
-    console.log('[updateMobilImage] Saving imageUrl to DB:', imageUrl);
+    const result = await uploadToCloudinary(req.file.buffer);
+    const imageUrl = result.secure_url;
+    console.log('[updateMobilImage] Uploaded to Cloudinary:', imageUrl);
 
     const mobil = await prisma.mobil.update({
       where: { id },
       data: { image: imageUrl }
     });
-    console.log('[updateMobilImage] DB result image:', mobil.image);
     res.status(200).json({ message: "Gambar mobil berhasil diperbarui.", filename: imageUrl, mobil });
   } catch (error) {
     console.error("Update Mobil Image Error:", error);
@@ -219,19 +221,24 @@ const deleteMobil = async (req, res) => {
 // 6. TAMBAH MOBIL BARU
 const createMobil = async (req, res) => {
   try {
-    const { namaMobil, tipe, hargaPerHari, biayaDriver, statusTersedia, kursi, bagasi, transmisi, fiturLain, image } = req.body;
+    const body = req.body || {};
+    const { namaMobil, tipe, hargaPerHari, biayaDriver, statusTersedia, kursi, bagasi, transmisi, fiturLain, image } = body;
     
-    console.log('[createMobil] req.body:', JSON.stringify(req.body));
-    console.log('[createMobil] req.file:', req.file ? { path: req.file.path, filename: req.file.filename } : 'NO FILE');
+    console.log('[createMobil] req.body:', JSON.stringify(body));
+    console.log('[createMobil] req.file:', req.file ? 'YES (buffer)' : 'NO FILE');
 
     // Generate ID otomatis (MBL- + 4 digit angka random)
     const randomId = `MBL-${Math.floor(1000 + Math.random() * 9000)}`;
 
-    // Prioritaskan URL dari file upload Cloudinary, fallback ke body.image
-    const cloudinaryUrl = req.file ? req.file.path : null;
-    const imageValue = cloudinaryUrl || ((image && image.trim && image.trim() !== '') ? image.trim() : null);
-    console.log('[createMobil] cloudinaryUrl:', cloudinaryUrl);
-    console.log('[createMobil] final imageValue to save:', imageValue);
+    // Upload file ke Cloudinary jika ada
+    let imageValue = null;
+    if (req.file) {
+      const result = await uploadToCloudinary(req.file.buffer);
+      imageValue = result.secure_url;
+      console.log('[createMobil] Uploaded to Cloudinary:', imageValue);
+    } else if (image && image.trim && image.trim() !== '') {
+      imageValue = image.trim();
+    }
 
     const newMobil = await prisma.mobil.create({
       data: {
@@ -317,18 +324,23 @@ const updateAdminSettings = async (req, res) => {
 // 10. TAMBAH RUTE TRAVEL BARU
 const createTravel = async (req, res) => {
   try {
-    const { asal, tujuan, hargaTiket, jadwal, armada, totalKursi, fasilitas, estimasiWaktu, titikKumpul, titikTurun, image } = req.body;
+    const body = req.body || {};
+    const { asal, tujuan, hargaTiket, jadwal, armada, totalKursi, fasilitas, estimasiWaktu, titikKumpul, titikTurun, image } = body;
     
-    console.log('[createTravel] req.body:', JSON.stringify(req.body));
-    console.log('[createTravel] req.file:', req.file ? { path: req.file.path, filename: req.file.filename } : 'NO FILE');
+    console.log('[createTravel] req.body:', JSON.stringify(body));
+    console.log('[createTravel] req.file:', req.file ? 'YES (buffer)' : 'NO FILE');
 
     const randomId = `TRV-${Date.now()}`;
 
-    // Prioritaskan URL dari file upload Cloudinary, fallback ke body.image
-    const cloudinaryUrl = req.file ? req.file.path : null;
-    const imageValue = cloudinaryUrl || ((image && image.trim && image.trim() !== '') ? image.trim() : null);
-    console.log('[createTravel] cloudinaryUrl:', cloudinaryUrl);
-    console.log('[createTravel] final imageValue to save:', imageValue);
+    // Upload file ke Cloudinary jika ada
+    let imageValue = null;
+    if (req.file) {
+      const result = await uploadToCloudinary(req.file.buffer);
+      imageValue = result.secure_url;
+      console.log('[createTravel] Uploaded to Cloudinary:', imageValue);
+    } else if (image && image.trim && image.trim() !== '') {
+      imageValue = image.trim();
+    }
 
     const newTravel = await prisma.ruteTravel.create({
       data: {
@@ -360,13 +372,16 @@ const createTravel = async (req, res) => {
 const updateTravel = async (req, res) => {
   try {
     const { id } = req.params;
-    const { asal, tujuan, hargaTiket, jadwal, armada, totalKursi, sisaKursi, fasilitas, estimasiWaktu, titikKumpul, titikTurun, image } = req.body;
+    const body = req.body || {};
+    const { asal, tujuan, hargaTiket, jadwal, armada, totalKursi, sisaKursi, fasilitas, estimasiWaktu, titikKumpul, titikTurun, image } = body;
 
-    // Prioritaskan URL dari file upload Cloudinary, fallback ke body.image
-    const imageUrl = req.file ? req.file.path : image;
-    console.log('[updateTravel] req.file:', req.file ? { path: req.file.path } : 'NO FILE');
-    console.log('[updateTravel] body.image:', image);
-    console.log('[updateTravel] final imageUrl:', imageUrl);
+    // Upload file ke Cloudinary jika ada, fallback ke body.image
+    let imageUrl = image;
+    if (req.file) {
+      const result = await uploadToCloudinary(req.file.buffer);
+      imageUrl = result.secure_url;
+      console.log('[updateTravel] Uploaded to Cloudinary:', imageUrl);
+    }
 
     const updatedTravel = await prisma.ruteTravel.update({
       where: { id },
@@ -397,18 +412,16 @@ const updateTravel = async (req, res) => {
 const updateTravelImage = async (req, res) => {
   try {
     const { id } = req.params;
-    console.log('[updateTravelImage] ID:', id);
-    console.log('[updateTravelImage] req.file:', req.file ? { path: req.file.path, filename: req.file.filename } : 'NO FILE');
     if (!req.file) return res.status(400).json({ error: "Tidak ada file yang diunggah" });
 
-    const imageUrl = req.file.path;
-    console.log('[updateTravelImage] Saving imageUrl to DB:', imageUrl);
+    const result = await uploadToCloudinary(req.file.buffer);
+    const imageUrl = result.secure_url;
+    console.log('[updateTravelImage] Uploaded to Cloudinary:', imageUrl);
 
     const travel = await prisma.ruteTravel.update({
       where: { id },
       data: { image: imageUrl }
     });
-    console.log('[updateTravelImage] DB result image:', travel.image);
     res.status(200).json({ message: "Gambar travel berhasil diperbarui.", filename: imageUrl, travel });
   } catch (error) {
     console.error("Update Travel Image Error:", error);

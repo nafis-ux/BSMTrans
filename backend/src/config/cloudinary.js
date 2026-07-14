@@ -1,5 +1,4 @@
 const cloudinary = require('cloudinary').v2;
-const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const multer = require('multer');
 
 // Konfigurasi menggunakan .env
@@ -9,18 +8,37 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
-// Storage untuk gambar mobil/travel
-const cloudinaryStorage = new CloudinaryStorage({
-  cloudinary: cloudinary,
-  params: {
-    folder: 'bsmtrans_uploads',
-    allowed_formats: ['jpg', 'jpeg', 'png', 'webp'],
-  },
+// Gunakan memoryStorage agar kompatibel dengan multer v2 + Express 5
+// File disimpan sebagai buffer di req.file.buffer
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 5 * 1024 * 1024 }, // max 5MB
+  fileFilter: (req, file, cb) => {
+    const allowed = ['image/jpeg', 'image/png', 'image/webp', 'image/jpg'];
+    if (allowed.includes(file.mimetype)) {
+      cb(null, true);
+    } else {
+      cb(new Error('Format file tidak didukung. Gunakan JPG, PNG, atau WebP.'));
+    }
+  }
 });
 
-const uploadCloudinary = multer({ storage: cloudinaryStorage });
+// Helper: upload buffer ke Cloudinary secara manual
+const uploadToCloudinary = (fileBuffer, options = {}) => {
+  return new Promise((resolve, reject) => {
+    const stream = cloudinary.uploader.upload_stream(
+      { folder: 'bsmtrans_uploads', ...options },
+      (error, result) => {
+        if (error) reject(error);
+        else resolve(result);
+      }
+    );
+    stream.end(fileBuffer);
+  });
+};
 
 module.exports = {
   cloudinary,
-  uploadCloudinary
+  upload,
+  uploadToCloudinary
 };

@@ -4,9 +4,9 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 
-const upload = multer(); // Menginisialisasi multer untuk membaca FormData
+const uploadFormData = multer(); // Multer kosong untuk membaca FormData tanpa file
 
-const { uploadCloudinary } = require('../config/cloudinary');
+const { upload: uploadWithFile } = require('../config/cloudinary');
 
 // 1. IMPORT MIDDLEWARE AUTH & CONTROLLER
 const { verifyToken } = require('../middleware/authMiddleware'); 
@@ -20,16 +20,16 @@ const {
 } = require('../controllers/transaksiController');
 
 // Ambil token dulu -> bongkar FormData -> jalankan fungsi buat transaksi
-router.post('/sewa-mobil', verifyToken, upload.single('fotoKTP'), createTransaksi);
+router.post('/sewa-mobil', verifyToken, uploadFormData.single('fotoKTP'), createTransaksi);
 
 // Rute umum untuk TRAVEL (tanpa upload KTP di awal, berupa JSON)
 router.post('/', verifyToken, createTransaksi);
 
 // Rute untuk mengunggah bukti DP
-router.post('/:id/bukti-dp', verifyToken, uploadCloudinary.single('buktiDP'), uploadBuktiDP);
+router.post('/:id/bukti-dp', verifyToken, uploadWithFile.single('buktiDP'), uploadBuktiDP);
 
 // Rute untuk mengunggah bukti pelunasan
-router.post('/:id/bukti-sisa', verifyToken, uploadCloudinary.single('buktiSisa'), uploadBuktiSisa);
+router.post('/:id/bukti-sisa', verifyToken, uploadWithFile.single('buktiSisa'), uploadBuktiSisa);
 
 // Ambil token dulu -> ambil daftar transaksi milik user tersebut
 router.get('/user', verifyToken, getTransaksiByUserId);

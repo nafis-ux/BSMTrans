@@ -1,10 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const multer = require('multer');
-const path = require('path');
-const fs = require('fs');
 
-const { uploadCloudinary } = require('../config/cloudinary');
+const { upload, uploadToCloudinary } = require('../config/cloudinary');
 
 const { verifyToken } = require('../middleware/authMiddleware');
 const { verifyAdmin } = require('../middleware/adminMiddleware');
@@ -37,23 +34,35 @@ router.get('/transaksi', verifyToken, verifyAdmin, getAllTransaksi);
 router.put('/transaksi/:id/status', verifyToken, verifyAdmin, updateStatusTransaksi);
 
 // Kelola data mobil
-router.post('/mobil/upload', verifyToken, verifyAdmin, uploadCloudinary.single('image'), (req, res) => {
-  if (!req.file) return res.status(400).json({ error: "Tidak ada file yang diunggah" });
-  res.status(200).json({ message: "Upload sukses", filename: req.file.path });
+router.post('/mobil/upload', verifyToken, verifyAdmin, upload.single('image'), async (req, res) => {
+  try {
+    if (!req.file) return res.status(400).json({ error: "Tidak ada file yang diunggah" });
+    const result = await uploadToCloudinary(req.file.buffer);
+    res.status(200).json({ message: "Upload sukses", filename: result.secure_url });
+  } catch (error) {
+    console.error("Upload Error:", error);
+    res.status(500).json({ error: "Gagal upload: " + error.message });
+  }
 });
-router.put('/mobil/:id/image', verifyToken, verifyAdmin, uploadCloudinary.single('image'), updateMobilImage);
-router.post('/mobil', verifyToken, verifyAdmin, uploadCloudinary.single('image'), createMobil);
-router.put('/mobil/:id', verifyToken, verifyAdmin, uploadCloudinary.single('image'), updateMobil);
+router.put('/mobil/:id/image', verifyToken, verifyAdmin, upload.single('image'), updateMobilImage);
+router.post('/mobil', verifyToken, verifyAdmin, upload.single('image'), createMobil);
+router.put('/mobil/:id', verifyToken, verifyAdmin, upload.single('image'), updateMobil);
 router.delete('/mobil/:id', verifyToken, verifyAdmin, deleteMobil);
 
 // Kelola data rute travel
-router.post('/travel/upload', verifyToken, verifyAdmin, uploadCloudinary.single('image'), (req, res) => {
-  if (!req.file) return res.status(400).json({ error: "Tidak ada file yang diunggah" });
-  res.status(200).json({ message: "Upload sukses", filename: req.file.path });
+router.post('/travel/upload', verifyToken, verifyAdmin, upload.single('image'), async (req, res) => {
+  try {
+    if (!req.file) return res.status(400).json({ error: "Tidak ada file yang diunggah" });
+    const result = await uploadToCloudinary(req.file.buffer);
+    res.status(200).json({ message: "Upload sukses", filename: result.secure_url });
+  } catch (error) {
+    console.error("Upload Error:", error);
+    res.status(500).json({ error: "Gagal upload: " + error.message });
+  }
 });
-router.put('/travel/:id/image', verifyToken, verifyAdmin, uploadCloudinary.single('image'), updateTravelImage);
-router.post('/travel', verifyToken, verifyAdmin, uploadCloudinary.single('image'), createTravel);
-router.put('/travel/:id', verifyToken, verifyAdmin, uploadCloudinary.single('image'), updateTravel);
+router.put('/travel/:id/image', verifyToken, verifyAdmin, upload.single('image'), updateTravelImage);
+router.post('/travel', verifyToken, verifyAdmin, upload.single('image'), createTravel);
+router.put('/travel/:id', verifyToken, verifyAdmin, upload.single('image'), updateTravel);
 router.delete('/travel/:id', verifyToken, verifyAdmin, deleteTravel);
 
 // Kelola profil dan pengaturan admin

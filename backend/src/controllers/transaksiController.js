@@ -1,4 +1,5 @@
 const prisma = require('../config/database');
+const { uploadToCloudinary } = require('../config/cloudinary');
 
 // A. ENDPOINT POST: Membuat Transaksi Baru
 const createTransaksi = async (req, res) => {
@@ -176,7 +177,14 @@ const uploadBuktiDP = async (req, res) => {
       return res.status(400).json({ error: "Berkas resi bukti transfer DP wajib diunggah!" });
     }
 
-    const filename = req.file.path;
+    const filename = req.file.path || req.file.secure_url;
+
+    // Upload ke Cloudinary jika file masih berupa buffer (memoryStorage)
+    let imageUrl = filename;
+    if (req.file.buffer) {
+      const result = await uploadToCloudinary(req.file.buffer);
+      imageUrl = result.secure_url;
+    }
 
     const transaksi = await prisma.transaksi.findUnique({
       where: { id: id }
@@ -188,10 +196,10 @@ const uploadBuktiDP = async (req, res) => {
 
     await prisma.dokumenValidasi.upsert({
       where: { transaksiId: id },
-      update: { buktiResiDP: filename },
+      update: { buktiResiDP: imageUrl },
       create: {
         transaksiId: id,
-        buktiResiDP: filename
+        buktiResiDP: imageUrl
       }
     });
 
@@ -217,7 +225,14 @@ const uploadBuktiSisa = async (req, res) => {
       return res.status(400).json({ error: "Berkas resi bukti transfer pelunasan sisa wajib diunggah!" });
     }
 
-    const filename = req.file.path;
+    const filename = req.file.path || req.file.secure_url;
+
+    // Upload ke Cloudinary jika file masih berupa buffer (memoryStorage)
+    let imageUrl = filename;
+    if (req.file.buffer) {
+      const result = await uploadToCloudinary(req.file.buffer);
+      imageUrl = result.secure_url;
+    }
 
     const transaksi = await prisma.transaksi.findUnique({
       where: { id: id }
@@ -229,10 +244,10 @@ const uploadBuktiSisa = async (req, res) => {
 
     await prisma.dokumenValidasi.upsert({
       where: { transaksiId: id },
-      update: { buktiResiSisa: filename },
+      update: { buktiResiSisa: imageUrl },
       create: {
         transaksiId: id,
-        buktiResiSisa: filename
+        buktiResiSisa: imageUrl
       }
     });
 
