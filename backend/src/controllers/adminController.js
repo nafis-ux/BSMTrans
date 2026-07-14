@@ -152,6 +152,12 @@ const updateMobil = async (req, res) => {
     const { id } = req.params;
     const { namaMobil, tipe, hargaPerHari, biayaDriver, statusTersedia, kursi, bagasi, transmisi, fiturLain, image } = req.body;
 
+    // Prioritaskan URL dari file upload Cloudinary, fallback ke body.image
+    const imageUrl = req.file ? req.file.path : image;
+    console.log('[updateMobil] req.file:', req.file ? { path: req.file.path } : 'NO FILE');
+    console.log('[updateMobil] body.image:', image);
+    console.log('[updateMobil] final imageUrl:', imageUrl);
+
     const mobil = await prisma.mobil.update({
       where: { id },
       data: {
@@ -159,12 +165,12 @@ const updateMobil = async (req, res) => {
         ...(tipe !== undefined && { tipe }),
         ...(hargaPerHari !== undefined && { hargaPerHari: parseInt(hargaPerHari) || 0 }),
         ...(biayaDriver !== undefined && { biayaDriver: parseInt(biayaDriver) || 0 }),
-        ...(statusTersedia !== undefined && { statusTersedia }),
+        ...(statusTersedia !== undefined && { statusTersedia: statusTersedia === 'true' || statusTersedia === true }),
         ...(kursi !== undefined && { kursi: parseInt(kursi) || 5 }),
         ...(bagasi !== undefined && { bagasi: parseInt(bagasi) || 2 }),
         ...(transmisi !== undefined && { transmisi }),
         ...(fiturLain !== undefined && { fiturLain }),
-        ...(image !== undefined && { image }),
+        ...(imageUrl !== undefined && { image: imageUrl }),
       }
     });
 
@@ -216,14 +222,16 @@ const createMobil = async (req, res) => {
     const { namaMobil, tipe, hargaPerHari, biayaDriver, statusTersedia, kursi, bagasi, transmisi, fiturLain, image } = req.body;
     
     console.log('[createMobil] req.body:', JSON.stringify(req.body));
-    console.log('[createMobil] image value:', JSON.stringify(image), 'type:', typeof image);
+    console.log('[createMobil] req.file:', req.file ? { path: req.file.path, filename: req.file.filename } : 'NO FILE');
 
     // Generate ID otomatis (MBL- + 4 digit angka random)
     const randomId = `MBL-${Math.floor(1000 + Math.random() * 9000)}`;
 
-    // Pastikan image yang kosong jadi null
-    const imageValue = (image && image.trim && image.trim() !== '') ? image.trim() : null;
-    console.log('[createMobil] imageValue to save:', imageValue);
+    // Prioritaskan URL dari file upload Cloudinary, fallback ke body.image
+    const cloudinaryUrl = req.file ? req.file.path : null;
+    const imageValue = cloudinaryUrl || ((image && image.trim && image.trim() !== '') ? image.trim() : null);
+    console.log('[createMobil] cloudinaryUrl:', cloudinaryUrl);
+    console.log('[createMobil] final imageValue to save:', imageValue);
 
     const newMobil = await prisma.mobil.create({
       data: {
@@ -232,7 +240,7 @@ const createMobil = async (req, res) => {
         tipe: tipe || "Standar",
         hargaPerHari: parseInt(hargaPerHari) || 0,
         biayaDriver: parseInt(biayaDriver) || 150000,
-        statusTersedia: statusTersedia !== undefined ? statusTersedia : true,
+        statusTersedia: statusTersedia !== undefined ? (statusTersedia === 'true' || statusTersedia === true) : true,
         kursi: parseInt(kursi) || 5,
         bagasi: parseInt(bagasi) || 2,
         transmisi: transmisi || "Manual",
@@ -312,13 +320,15 @@ const createTravel = async (req, res) => {
     const { asal, tujuan, hargaTiket, jadwal, armada, totalKursi, fasilitas, estimasiWaktu, titikKumpul, titikTurun, image } = req.body;
     
     console.log('[createTravel] req.body:', JSON.stringify(req.body));
-    console.log('[createTravel] image value:', JSON.stringify(image), 'type:', typeof image);
+    console.log('[createTravel] req.file:', req.file ? { path: req.file.path, filename: req.file.filename } : 'NO FILE');
 
     const randomId = `TRV-${Date.now()}`;
 
-    // Pastikan image yang kosong jadi null
-    const imageValue = (image && image.trim && image.trim() !== '') ? image.trim() : null;
-    console.log('[createTravel] imageValue to save:', imageValue);
+    // Prioritaskan URL dari file upload Cloudinary, fallback ke body.image
+    const cloudinaryUrl = req.file ? req.file.path : null;
+    const imageValue = cloudinaryUrl || ((image && image.trim && image.trim() !== '') ? image.trim() : null);
+    console.log('[createTravel] cloudinaryUrl:', cloudinaryUrl);
+    console.log('[createTravel] final imageValue to save:', imageValue);
 
     const newTravel = await prisma.ruteTravel.create({
       data: {
@@ -352,6 +362,12 @@ const updateTravel = async (req, res) => {
     const { id } = req.params;
     const { asal, tujuan, hargaTiket, jadwal, armada, totalKursi, sisaKursi, fasilitas, estimasiWaktu, titikKumpul, titikTurun, image } = req.body;
 
+    // Prioritaskan URL dari file upload Cloudinary, fallback ke body.image
+    const imageUrl = req.file ? req.file.path : image;
+    console.log('[updateTravel] req.file:', req.file ? { path: req.file.path } : 'NO FILE');
+    console.log('[updateTravel] body.image:', image);
+    console.log('[updateTravel] final imageUrl:', imageUrl);
+
     const updatedTravel = await prisma.ruteTravel.update({
       where: { id },
       data: {
@@ -366,7 +382,7 @@ const updateTravel = async (req, res) => {
         ...(estimasiWaktu !== undefined && { estimasiWaktu }),
         ...(titikKumpul !== undefined && { titikKumpul }),
         ...(titikTurun !== undefined && { titikTurun }),
-        ...(image !== undefined && { image }),
+        ...(imageUrl !== undefined && { image: imageUrl }),
       }
     });
 

@@ -19,6 +19,8 @@ export default function AdminTravelPage() {
 
   const [newRuteForm, setNewRuteForm] = useState(initialFormState);
   const [editRuteForm, setEditRuteForm] = useState({});
+  const [newRuteImageFile, setNewRuteImageFile] = useState(null);
+  const [editRuteImageFile, setEditRuteImageFile] = useState(null);
 
   useEffect(() => {
     fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/travel`)
@@ -34,39 +36,18 @@ export default function AdminTravelPage() {
     const file = e.target.files[0];
     if (!file) return;
 
-    const formData = new FormData();
-    formData.append('image', file);
-
-    const token = localStorage.getItem('token');
-    try {
-      const isDirectUpdate = isEdit && editRuteId;
-      const url = isDirectUpdate 
-        ? `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/admin/travel/${editRuteId}/image`
-        : `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/admin/travel/upload`;
-      
-      const method = isDirectUpdate ? 'PUT' : 'POST';
-
-      const res = await fetch(url, {
-        method: method,
-        headers: { 'Authorization': `Bearer ${token}` },
-        body: formData
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error);
-
-      if (isEdit) {
-        setEditRuteForm(prev => ({ ...prev, image: data.filename }));
-        // Update data langsung di tabel (tidak perlu klik Simpan lagi khusus gambar)
-        setTravelData(prev => prev.map(r => r.id === editRuteId ? { ...r, image: data.filename } : r));
-      } else {
-        setNewRuteForm(prev => ({ ...prev, image: data.filename }));
-      }
-    } catch (err) {
-      alert("Gagal upload gambar: " + err.message);
-    } finally {
-      // Reset input file agar file yang sama bisa di-upload berulang kali
-      e.target.value = '';
+    if (isEdit && editRuteId) {
+      // Mode edit: simpan file untuk dikirim saat save
+      setEditRuteImageFile(file);
+      setEditRuteForm(prev => ({ ...prev, image: file.name }));
+    } else {
+      // Mode create: simpan file object, akan dikirim saat handleAddRute
+      setNewRuteImageFile(file);
+      setNewRuteForm(prev => ({ ...prev, image: file.name }));
     }
+
+    // Reset input file agar file yang sama bisa di-upload berulang kali
+    e.target.value = '';
   };
 
   const handleAddRute = async () => {
@@ -76,10 +57,25 @@ export default function AdminTravelPage() {
     }
     const token = localStorage.getItem('token');
     try {
+      const formData = new FormData();
+      formData.append('asal', newRuteForm.asal);
+      formData.append('tujuan', newRuteForm.tujuan);
+      formData.append('hargaTiket', newRuteForm.hargaTiket);
+      formData.append('jadwal', newRuteForm.jadwal);
+      formData.append('armada', newRuteForm.armada);
+      formData.append('totalKursi', newRuteForm.totalKursi);
+      formData.append('fasilitas', newRuteForm.fasilitas);
+      formData.append('estimasiWaktu', newRuteForm.estimasiWaktu);
+      formData.append('titikKumpul', newRuteForm.titikKumpul);
+      formData.append('titikTurun', newRuteForm.titikTurun);
+      if (newRuteImageFile) {
+        formData.append('image', newRuteImageFile);
+      }
+
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/admin/travel`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-        body: JSON.stringify(newRuteForm)
+        headers: { 'Authorization': `Bearer ${token}` },
+        body: formData
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error);
@@ -87,6 +83,7 @@ export default function AdminTravelPage() {
       if (data.travel) setTravelData(prev => [...prev, data.travel]);
       setShowAddRute(false);
       setNewRuteForm(initialFormState);
+      setNewRuteImageFile(null);
     } catch (err) {
       alert("Gagal: " + err.message);
     }
@@ -113,16 +110,34 @@ export default function AdminTravelPage() {
   const handleSaveEditRute = async () => {
     const token = localStorage.getItem('token');
     try {
+      const formData = new FormData();
+      formData.append('asal', editRuteForm.asal);
+      formData.append('tujuan', editRuteForm.tujuan);
+      formData.append('hargaTiket', editRuteForm.hargaTiket);
+      formData.append('jadwal', editRuteForm.jadwal);
+      formData.append('armada', editRuteForm.armada);
+      formData.append('totalKursi', editRuteForm.totalKursi);
+      formData.append('sisaKursi', editRuteForm.sisaKursi);
+      formData.append('fasilitas', editRuteForm.fasilitas);
+      formData.append('estimasiWaktu', editRuteForm.estimasiWaktu);
+      formData.append('titikKumpul', editRuteForm.titikKumpul);
+      formData.append('titikTurun', editRuteForm.titikTurun);
+      if (editRuteImageFile) {
+        formData.append('image', editRuteImageFile);
+      }
+
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/admin/travel/${editRuteId}`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-        body: JSON.stringify(editRuteForm)
+        headers: { 'Authorization': `Bearer ${token}` },
+        body: formData
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error);
       alert(data.message);
-      setTravelData(prev => prev.map(r => r.id === editRuteId ? { ...r, ...editRuteForm, hargaTiket: parseInt(editRuteForm.hargaTiket) } : r));
+      // Update local state with the server response
+      setTravelData(prev => prev.map(r => r.id === editRuteId ? data.travel : r));
       setEditRuteId(null);
+      setEditRuteImageFile(null);
     } catch (err) {
       alert("Gagal: " + err.message);
     }

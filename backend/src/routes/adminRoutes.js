@@ -42,8 +42,8 @@ router.post('/mobil/upload', verifyToken, verifyAdmin, uploadCloudinary.single('
   res.status(200).json({ message: "Upload sukses", filename: req.file.path });
 });
 router.put('/mobil/:id/image', verifyToken, verifyAdmin, uploadCloudinary.single('image'), updateMobilImage);
-router.post('/mobil', verifyToken, verifyAdmin, createMobil);
-router.put('/mobil/:id', verifyToken, verifyAdmin, updateMobil);
+router.post('/mobil', verifyToken, verifyAdmin, uploadCloudinary.single('image'), createMobil);
+router.put('/mobil/:id', verifyToken, verifyAdmin, uploadCloudinary.single('image'), updateMobil);
 router.delete('/mobil/:id', verifyToken, verifyAdmin, deleteMobil);
 
 // Kelola data rute travel
@@ -52,8 +52,8 @@ router.post('/travel/upload', verifyToken, verifyAdmin, uploadCloudinary.single(
   res.status(200).json({ message: "Upload sukses", filename: req.file.path });
 });
 router.put('/travel/:id/image', verifyToken, verifyAdmin, uploadCloudinary.single('image'), updateTravelImage);
-router.post('/travel', verifyToken, verifyAdmin, createTravel);
-router.put('/travel/:id', verifyToken, verifyAdmin, updateTravel);
+router.post('/travel', verifyToken, verifyAdmin, uploadCloudinary.single('image'), createTravel);
+router.put('/travel/:id', verifyToken, verifyAdmin, uploadCloudinary.single('image'), updateTravel);
 router.delete('/travel/:id', verifyToken, verifyAdmin, deleteTravel);
 
 // Kelola profil dan pengaturan admin

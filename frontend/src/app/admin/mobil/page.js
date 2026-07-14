@@ -15,6 +15,8 @@ export default function AdminMobilPage() {
     namaMobil: '', tipe: '', hargaPerHari: '', biayaDriver: '150000', statusTersedia: true,
     kursi: '5', bagasi: '2', transmisi: 'Manual', fiturLain: 'AC, Audio', image: ''
   });
+  const [newMobilImageFile, setNewMobilImageFile] = useState(null);
+  const [editMobilImageFile, setEditMobilImageFile] = useState(null);
 
   useEffect(() => {
     fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/mobil`)
@@ -62,16 +64,32 @@ export default function AdminMobilPage() {
   const handleSaveEditMobil = async () => {
     const token = localStorage.getItem('token');
     try {
+      const formData = new FormData();
+      formData.append('namaMobil', editMobilForm.namaMobil);
+      formData.append('tipe', editMobilForm.tipe);
+      formData.append('hargaPerHari', editMobilForm.hargaPerHari);
+      formData.append('biayaDriver', editMobilForm.biayaDriver);
+      formData.append('statusTersedia', editMobilForm.statusTersedia);
+      formData.append('kursi', editMobilForm.kursi);
+      formData.append('bagasi', editMobilForm.bagasi);
+      formData.append('transmisi', editMobilForm.transmisi);
+      formData.append('fiturLain', editMobilForm.fiturLain);
+      if (editMobilImageFile) {
+        formData.append('image', editMobilImageFile);
+      }
+
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/admin/mobil/${editMobilId}`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-        body: JSON.stringify(editMobilForm)
+        headers: { 'Authorization': `Bearer ${token}` },
+        body: formData
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error);
       alert(data.message);
-      setMobilData(prev => prev.map(m => m.id === editMobilId ? { ...m, ...editMobilForm, hargaPerHari: parseInt(editMobilForm.hargaPerHari), biayaDriver: parseInt(editMobilForm.biayaDriver) } : m));
+      // Update local state with the server response
+      setMobilData(prev => prev.map(m => m.id === editMobilId ? data.mobil : m));
       setEditMobilId(null);
+      setEditMobilImageFile(null);
     } catch (err) {
       alert("Gagal: " + err.message);
     }
@@ -81,39 +99,18 @@ export default function AdminMobilPage() {
     const file = e.target.files[0];
     if (!file) return;
 
-    const formData = new FormData();
-    formData.append('image', file);
-
-    const token = localStorage.getItem('token');
-    try {
-      const isDirectUpdate = isEdit && editMobilId;
-      const url = isDirectUpdate 
-        ? `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/admin/mobil/${editMobilId}/image`
-        : `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/admin/mobil/upload`;
-      
-      const method = isDirectUpdate ? 'PUT' : 'POST';
-
-      const res = await fetch(url, {
-        method: method,
-        headers: { 'Authorization': `Bearer ${token}` },
-        body: formData
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error);
-
-      if (isEdit) {
-        setEditMobilForm(prev => ({ ...prev, image: data.filename }));
-        // Update data langsung di tabel (tidak perlu klik Simpan lagi khusus gambar)
-        setMobilData(prev => prev.map(m => m.id === editMobilId ? { ...m, image: data.filename } : m));
-      } else {
-        setNewMobilForm(prev => ({ ...prev, image: data.filename }));
-      }
-    } catch (err) {
-      alert("Gagal upload gambar: " + err.message);
-    } finally {
-      // Reset input file agar file yang sama bisa di-upload berulang kali
-      e.target.value = '';
+    if (isEdit && editMobilId) {
+      // Mode edit: simpan file untuk dikirim saat save
+      setEditMobilImageFile(file);
+      setEditMobilForm(prev => ({ ...prev, image: file.name }));
+    } else {
+      // Mode create: simpan file object, akan dikirim saat handleAddMobil
+      setNewMobilImageFile(file);
+      setNewMobilForm(prev => ({ ...prev, image: file.name }));
     }
+
+    // Reset input file agar file yang sama bisa di-upload berulang kali
+    e.target.value = '';
   };
 
   const handleAddMobil = async () => {
@@ -123,10 +120,24 @@ export default function AdminMobilPage() {
     }
     const token = localStorage.getItem('token');
     try {
+      const formData = new FormData();
+      formData.append('namaMobil', newMobilForm.namaMobil);
+      formData.append('tipe', newMobilForm.tipe);
+      formData.append('hargaPerHari', newMobilForm.hargaPerHari);
+      formData.append('biayaDriver', newMobilForm.biayaDriver);
+      formData.append('statusTersedia', newMobilForm.statusTersedia);
+      formData.append('kursi', newMobilForm.kursi);
+      formData.append('bagasi', newMobilForm.bagasi);
+      formData.append('transmisi', newMobilForm.transmisi);
+      formData.append('fiturLain', newMobilForm.fiturLain);
+      if (newMobilImageFile) {
+        formData.append('image', newMobilImageFile);
+      }
+
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/admin/mobil`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-        body: JSON.stringify(newMobilForm)
+        headers: { 'Authorization': `Bearer ${token}` },
+        body: formData
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error);
@@ -135,6 +146,7 @@ export default function AdminMobilPage() {
       setMobilData(prev => [...prev, data.mobil]);
       setShowAddMobil(false);
       setNewMobilForm({ namaMobil: '', tipe: '', hargaPerHari: '', biayaDriver: '150000', statusTersedia: true, kursi: '5', bagasi: '2', transmisi: 'Manual', fiturLain: 'AC, Audio', image: '' });
+      setNewMobilImageFile(null);
     } catch (err) {
       alert("Gagal: " + err.message);
     }
